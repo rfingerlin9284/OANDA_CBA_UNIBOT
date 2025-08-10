@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎛️ Rick Dashboard - WOLFPACK-LITE Controller</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #f0f6fc;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            grid-template-rows: 60px 1fr 80px;
+            height: 100vh;
+            gap: 1px;
+            background: #21262d;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            background: #161b22;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #58a6ff;
+        }
+
+        .status-indicator {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #238636;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .main-panel {
+            background: #0d1117;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .rick-panel {
+            background: #161b22;
+            border-left: 1px solid #30363d;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rick-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #30363d;
+            background: #21262d;
+        }
+
+        .rick-chat {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-message {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: #1f6feb;
+            padding: 10px 15px;
+            border-radius: 18px 18px 4px 18px;
+            max-width: 80%;
+        }
+
+        .rick-message {
+            align-self: flex-start;
+            background: #21262d;
+            padding: 10px 15px;
+            border-radius: 18px 18px 18px 4px;
+            max-width: 80%;
+            border: 1px solid #30363d;
+        }
+
+        .input-area {
+            grid-column: 1 / -1;
+            background: #161b22;
+            padding: 20px;
+            border-top: 1px solid #30363d;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 12px 16px;
+            color: #f0f6fc;
+            font-size: 14px;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+
+        .btn {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #2ea043;
+        }
+
+        .btn-danger {
+            background: #da3633;
+        }
+
+        .btn-danger:hover {
+            background: #f85149;
+        }
+
+        .system-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            color: #58a6ff;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-green {
+            color: #238636;
+        }
+
+        .status-red {
+            color: #f85149;
+        }
+
+        .status-yellow {
+            color: #d29922;
+        }
+
+        .log-viewer {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 12px;
+            height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .pin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .pin-dialog {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .pin-input {
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            color: #f0f6fc;
+            font-size: 18px;
+            text-align: center;
+            margin: 20px 0;
+            width: 200px;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 1fr 300px 80px;
+            }
+            
+            .rick-panel {
+                border-left: none;
+                border-top: 1px solid #30363d;
+            }
+            
+            .system-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="pinOverlay" class="pin-overlay">
+        <div class="pin-dialog">
+            <h2>🔐 Rick Dashboard Access</h2>
+            <p>Enter PIN to access bot controls</p>
+            <input type="password" id="pinInput" class="pin-input" placeholder="PIN" maxlength="4">
+            <br>
+            <button onclick="authenticate()" class="btn">Access Dashboard</button>
+        </div>
+    </div>
+
+    <div class="dashboard">
+        <div class="header">
+            <div class="logo">🎛️ Rick Dashboard - WOLFPACK-LITE</div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span id="systemStatus">System Online</span>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            <div class="system-grid">
+                <div class="card">
+                    <h3>🤖 Bot Status</h3>
+                    <div id="botStatus">
+                        <div class="status-item">
+                            <span class="status-green">●</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-green">●</span>
+                        </div>
+                        <div class="status-item">
+                            <span>Heartbeat Monitor</span>
+                            <span class="status-green">●</span>
+                        </div>
+                    </div>
+                    <div class="control-buttons">
+                        <button onclick="controlAction('restart_ml')" class="btn btn-small">🔄 Restart ML</button>
+                        <button onclick="controlAction('reset_bailout')" class="btn btn-small btn-danger">🔓 Reset Bailout</button>
+                        <button onclick="controlAction('retrain_models')" class="btn btn-small">🧠 Retrain</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🧠 ML Models</h3>
+                    <div id="mlStatus">
+                        <div class="status-item">
+                            <span>Light Model</span>
+                            <span class="status-green">✅</span>
+                        </div>
+                        <div class="status-item">
+                            <span>Heavy Model</span>
+                            <span class="status-green">✅</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>⚙️ System Config</h3>
+                    <div id="configStatus">
+                        <div class="status-item">
+                            <span>Mode</span>
+                            <span id="systemMode">Sandbox</span>
+                        </div>
+                        <div class="status-item">
+                            <span>Last Update</span>
+                            <span id="lastUpdate">N/A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 Live Logs</h3>
+                <div id="logViewer" class="log-viewer">
+                    Loading logs...
+                </div>
+                <div style="margin-top: 10px;">
+                    <button onclick="showLogs('heartbeat')" class="btn btn-small">Heartbeat</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="rick-panel">
+            <div class="rick-header">
+                <h3>🧠 Rick AI Assistant</h3>
+            </div>
+            <div id="rickChat" class="rick-chat">
+                <div class="chat-message">
+                    <div class="rick-message">
+                        🧠 Hey boss! Rick here, ready to help with your trading bots. What's on your mind?
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask Rick about your bots..." onkeypress="handleEnter(event)">
+                <button onclick="sendMessage()" class="btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let authorized = false;
+
+        function authenticate() {
+            const pin = document.getElementById('pinInput').value;
+            
+            fetch('/api/auth', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({pin: pin})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    authorized = true;
+                    document.getElementById('pinOverlay').style.display = 'none';
+                    startDashboard();
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+
+        function startDashboard() {
+            updateStatus();
+            showLogs(currentLogType);
+            
+            // Update every 5 seconds
+            setInterval(updateStatus, 5000);
+            setInterval(() => showLogs(currentLogType), 3000);
+        }
+
+        function updateStatus() {
+            fetch('/api/status')
+            .then(response => response.json())
+            .then(data => {
+                // Update bot status
+                const botStatusDiv = document.getElementById('botStatus');
+                let botHtml = '';
+                for (const [botName, status] of Object.entries(data.bots)) {
+                    const statusClass = status.running ? 'status-green' : 'status-red';
+                    const statusIcon = status.running ? '●' : '●';
+                    botHtml += `
+                        <div class="status-item">
+                            <span>${botName}</span>
+                            <span class="${statusClass}">${statusIcon}</span>
+                        </div>
+                    `;
+                }
+                botStatusDiv.innerHTML = botHtml;
+
+                // Update ML status
+                const mlStatusDiv = document.getElementById('mlStatus');
+                const lightStatus = data.ml_models.light_model ? '✅' : '❌';
+                const heavyStatus = data.ml_models.heavy_model ? '✅' : '❌';
+                mlStatusDiv.innerHTML = `
+                    <div class="status-item">
+                        <span>Light Model</span>
+                        <span>${lightStatus}</span>
+                    </div>
+                    <div class="status-item">
+                        <span>Heavy Model</span>
+                        <span>${heavyStatus}</span>
+                    </div>
+                `;
+
+                // Update config
+                document.getElementById('systemMode').textContent = data.config.mode || 'Unknown';
+                document.getElementById('lastUpdate').textContent = data.config.last_upgrade || 'N/A';
+            });
+        }
+
+        function showLogs(logType) {
+            currentLogType = logType;
+            fetch(`/api/logs/${logType}`)
+            .then(response => response.json())
+            .then(data => {
+                const logViewer = document.getElementById('logViewer');
+                logViewer.textContent = data.logs.slice(-50).join('\n');
+                logViewer.scrollTop = logViewer.scrollHeight;
+            });
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            const chatDiv = document.getElementById('rickChat');
+            chatDiv.innerHTML += `
+                <div class="chat-message">
+                    <div class="user-message">${message}</div>
+                </div>
+            `;
+            
+            input.value = '';
+            
+            // Send to Rick
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: message})
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatDiv.innerHTML += `
+                    <div class="chat-message">
+                        <div class="rick-message">${data.rick}</div>
+                    </div>
+                `;
+                chatDiv.scrollTop = chatDiv.scrollHeight;
+            });
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function controlAction(action) {
+            if (!confirm(`Are you sure you want to: ${action}?`)) return;
+            
+            fetch(`/api/control/${action}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    updateStatus();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            });
+        }
+
+        // Auto-focus PIN input
+        document.getElementById('pinInput').focus();
+    </script>
+</body>
+</html>

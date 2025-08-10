@@ -1,0 +1,10 @@
+{
+  "pair": "SOL-USD",
+  "direction": "buy",
+  "confidence": 0.91,
+  "fvg_score": 0.77,
+  "fibonacci_ratio": 3,
+  "timestamp": "2025-08-06 00:42:16.084881",
+  "take_profit": 2.1,
+  "stop_loss": 1.1
+}

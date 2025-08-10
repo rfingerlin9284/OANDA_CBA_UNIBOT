@@ -1,0 +1,11 @@
+{
+  "OANDA_API_KEY": "bfc61e32b5218b0b3fe258aa743a1ba8-557ab61dd7909d8407eeb0053bb98f48",
+  "OANDA_ACCOUNT_ID": "001-001-13473069-001",
+  "OANDA_ENVIRONMENT": "live",
+  "OANDA_API_URL": "https://api-fxtrade.oanda.com",
+  "SIM_MODE": false,
+  "PRACTICE": false,
+  "LIVE_TRADING_ONLY": true,
+  "REAL_MONEY_ONLY": true,
+  "CONSTITUTIONAL_PIN": "841921"
+}

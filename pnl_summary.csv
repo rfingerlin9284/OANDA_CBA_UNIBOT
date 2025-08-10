@@ -1,0 +1,13 @@
+pair,trades,wins,losses,winrate,net_pnl_%,max_drawdown_%
+EUR_USD,0,0,0,0,0,0
+NZD_USD,0,0,0,0,0,0
+AUD_USD,0,0,0,0,0,0
+GBP_USD,0,0,0,0,0,0
+USD_CHF,0,0,0,0,0,0
+USD_JPY,0,0,0,0,0,0
+AUD_JPY,0,0,0,0,0,0
+GBP_JPY,0,0,0,0,0,0
+USD_CAD,0,0,0,0,0,0
+EUR_JPY,0,0,0,0,0,0
+USD_MXN,0,0,0,0,0,0
+EUR_GBP,0,0,0,0,0,0

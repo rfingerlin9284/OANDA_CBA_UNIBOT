@@ -1,0 +1,1768 @@
+{
+  "audit_timestamp": "2025-08-08 04:17:23",
+  "constitutional_pin": "841921",
+  "mission": "Eliminate all simulation mode logic",
+  "statistics": {
+    "files_examined": 210,
+    "simulation_references_found": 145,
+    "critical_issues_found": 52,
+    "total_issues": 52
+  },
+  "simulation_references": [
+    {
+      "file": ".env",
+      "line": 5,
+      "content": "SIM_MODE=false",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": ".env",
+      "line": 6,
+      "content": "PRACTICE=false",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "config.py",
+      "line": 6,
+      "content": "SIM_MODE = False",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "config.py",
+      "line": 7,
+      "content": "PRACTICE = False",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "config_live.json",
+      "line": 6,
+      "content": "\"SIM_MODE\": false,",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "config_live.json",
+      "line": 7,
+      "content": "\"PRACTICE\": false",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./router_live_fixed.py",
+      "line": 132,
+      "content": "# HARDCODED LIVE ENVIRONMENT - NEVER PRACTICE",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./router_live_fixed.py",
+      "line": 133,
+      "content": "live_environment = \"live\"  # NEVER CHANGE TO PRACTICE",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./final_performance_report.py",
+      "line": 289,
+      "content": "1. **Test in Sandbox Mode** - Validate changes safely",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Test in Sandbox Mode"
+    },
+    {
+      "file": "./final_performance_report.py",
+      "line": 338,
+      "content": "print(\"\ud83c\udfc6 FINAL VERDICT: SWARM ARCHITECTURE DEMONSTRATES SUPERIOR PERFORMANCE\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "DEMO"
+    },
+    {
+      "file": "./realistic_elite_10_year_backtest.py",
+      "line": 3,
+      "content": "\ud83c\udfc6 REALISTIC ELITE 18+18 PAIR SQUAD - 10 YEAR BACKTESTING SIMULATION",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./realistic_elite_10_year_backtest.py",
+      "line": 231,
+      "content": "logger.warning(f\"\u26a0\ufe0f  MARGIN CALL SIMULATION - Stopping at 90% drawdown\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./realistic_elite_10_year_backtest.py",
+      "line": 250,
+      "content": "logger.info(\"\u2705 Realistic 10-Year Simulation Complete!\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Simulation"
+    },
+    {
+      "file": "./realistic_elite_10_year_backtest.py",
+      "line": 387,
+      "content": "print(\"\u26a0\ufe0f  REALISTIC SIMULATION: Conservative risk management & proper win rates\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 5,
+      "content": "HUNT DOWN ALL SIMULATION MODE LOGIC AND KILL IT WITH FIRE",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 8,
+      "content": "1. Find all simulation/practice mode references",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 8,
+      "content": "1. Find all simulation/practice mode references",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 26,
+      "content": "self.simulation_references = []",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 31,
+      "content": "print(f\"Audit Target: Complete simulation mode elimination\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 35,
+      "content": "def scan_file_for_simulation_logic(self, filepath):",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 36,
+      "content": "\"\"\"Scan a file for simulation mode references\"\"\"",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 47,
+      "content": "# Patterns that indicate simulation mode",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "content": "r'(simulation|sim_mode|practice|demo|sandbox|test.*mode)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "content": "r'(simulation|sim_mode|practice|demo|sandbox|test.*mode)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sim_mode"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "content": "r'(simulation|sim_mode|practice|demo|sandbox|test.*mode)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "content": "r'(simulation|sim_mode|practice|demo|sandbox|test.*mode)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "content": "r'(simulation|sim_mode|practice|demo|sandbox|test.*mode)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "content": "r'(simulation|sim_mode|practice|demo|sandbox|test.*mode)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "test.*mode"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 50,
+      "content": "r'(SIM_MODE\\s*=\\s*True)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 51,
+      "content": "r'(PRACTICE\\s*=\\s*True)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 52,
+      "content": "r'(environment\\s*=\\s*[\"\\']practice[\"\\'])',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 53,
+      "content": "r'(environment\\s*=\\s*[\"\\']demo[\"\\'])',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 54,
+      "content": "r'(api-fxpractice\\.oanda\\.com)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 55,
+      "content": "r'(api\\.sandbox\\.coinbase)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 56,
+      "content": "r'(sandbox.*=.*True)',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 56,
+      "content": "r'(sandbox.*=.*True)',",
+      "pattern": "(sandbox.*=.*True)",
+      "match": "sandbox.*=.*True"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 57,
+      "content": "r'(live_mode.*=.*False)',",
+      "pattern": "(live_mode.*=.*False)",
+      "match": "live_mode.*=.*False"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 58,
+      "content": "r'(is_live.*=.*False)'",
+      "pattern": "(is_live.*=.*False)",
+      "match": "is_live.*=.*False"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 72,
+      "content": "self.simulation_references.append({",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "content": "'sim_mode = true', 'practice = true',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sim_mode"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "content": "'sim_mode = true', 'practice = true',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "content": "'sim_mode = true', 'practice = true',",
+      "pattern": "(SIM_MODE\\s*=\\s*True)",
+      "match": "sim_mode = true"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "content": "'sim_mode = true', 'practice = true',",
+      "pattern": "(PRACTICE\\s*=\\s*True)",
+      "match": "practice = true"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "content": "'practice\"', \"practice'\", 'demo\"', \"demo'\",",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "content": "'practice\"', \"practice'\", 'demo\"', \"demo'\",",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "content": "'practice\"', \"practice'\", 'demo\"', \"demo'\",",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "content": "'practice\"', \"practice'\", 'demo\"', \"demo'\",",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 84,
+      "content": "'fxpractice', 'sandbox'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 84,
+      "content": "'fxpractice', 'sandbox'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 90,
+      "content": "'issue': f\"Simulation mode enabled: {match.group()}\",",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 112,
+      "content": "self.scan_file_for_simulation_logic(config_file)",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 133,
+      "content": "self.scan_file_for_simulation_logic(py_file)",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 136,
+      "content": "\"\"\"Check environment variables for simulation settings\"\"\"",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 140,
+      "content": "'SIM_MODE', 'PRACTICE', 'OANDA_ENVIRONMENT',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 140,
+      "content": "'SIM_MODE', 'PRACTICE', 'OANDA_ENVIRONMENT',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 141,
+      "content": "'SANDBOX_MODE', 'TRADING_MODE'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SANDBOX"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "content": "if value.lower() in ['true', 'practice', 'demo', 'sandbox', 'simulation']:",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "content": "if value.lower() in ['true', 'practice', 'demo', 'sandbox', 'simulation']:",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "content": "if value.lower() in ['true', 'practice', 'demo', 'sandbox', 'simulation']:",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "content": "if value.lower() in ['true', 'practice', 'demo', 'sandbox', 'simulation']:",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 155,
+      "content": "'issue': f\"{var}={value} enables simulation mode\",",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 170,
+      "content": "if 'api-fxpractice.oanda.com' in env_content:",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 170,
+      "content": "if 'api-fxpractice.oanda.com' in env_content:",
+      "pattern": "(api-fxpractice\\.oanda\\.com)",
+      "match": "api-fxpractice.oanda.com"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 175,
+      "content": "'issue': 'OANDA practice endpoint detected',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 178,
+      "content": "print(\"   \u274c PRACTICE endpoint found in .env\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 201,
+      "content": "# SIMULATION MODE ELIMINATED",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 209,
+      "content": "# SIMULATION MODE PERMANENTLY DISABLED",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 210,
+      "content": "SIM_MODE=false",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 211,
+      "content": "PRACTICE=false",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 212,
+      "content": "SANDBOX_MODE=false",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SANDBOX"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 213,
+      "content": "DEMO_MODE=false",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "DEMO"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 231,
+      "content": "# ALL SIMULATION MODES ELIMINATED",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 239,
+      "content": "# === SIMULATION MODE ELIMINATED ===",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 240,
+      "content": "SIM_MODE = False        # PERMANENTLY DISABLED",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 241,
+      "content": "PRACTICE = False        # PERMANENTLY DISABLED",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 242,
+      "content": "SANDBOX_MODE = False    # PERMANENTLY DISABLED",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SANDBOX"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 243,
+      "content": "DEMO_MODE = False       # PERMANENTLY DISABLED",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "DEMO"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 267,
+      "content": "\"simulation_eliminated\": {",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 268,
+      "content": "\"sim_mode\": False,",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sim_mode"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 269,
+      "content": "\"practice\": False,",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 270,
+      "content": "\"sandbox_mode\": False,",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 271,
+      "content": "\"demo_mode\": False",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 276,
+      "content": "\"simulation_blocked\": True",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 293,
+      "content": "KILLS ALL SIMULATION LOGIC ON STARTUP",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 305,
+      "content": "os.environ['SIM_MODE'] = 'false'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 306,
+      "content": "os.environ['PRACTICE'] = 'false'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 307,
+      "content": "os.environ['SANDBOX_MODE'] = 'false'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SANDBOX"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "content": "'config_demo.py', 'config_practice.py', 'config_sandbox.py',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "content": "'config_demo.py', 'config_practice.py', 'config_sandbox.py',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "content": "'config_demo.py', 'config_practice.py', 'config_sandbox.py',",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "content": "'.env.demo', '.env.practice', '.env.sandbox'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "content": "'.env.demo', '.env.practice', '.env.sandbox'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "content": "'.env.demo', '.env.practice', '.env.sandbox'",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 322,
+      "content": "print(f\"\ud83d\udd25 DESTROYING simulation file: {{sim_file}}\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 325,
+      "content": "# Block practice endpoints",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 327,
+      "content": "# BLOCK SIMULATION ENDPOINTS - Constitutional PIN: 841921",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 328,
+      "content": "127.0.0.1 api-fxpractice.oanda.com",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 328,
+      "content": "127.0.0.1 api-fxpractice.oanda.com",
+      "pattern": "(api-fxpractice\\.oanda\\.com)",
+      "match": "api-fxpractice.oanda.com"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 329,
+      "content": "127.0.0.1 api.sandbox.coinbase.com",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "sandbox"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 329,
+      "content": "127.0.0.1 api.sandbox.coinbase.com",
+      "pattern": "(api\\.sandbox\\.coinbase)",
+      "match": "api.sandbox.coinbase"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 351,
+      "content": "\"mission\": \"Eliminate all simulation mode logic\",",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 354,
+      "content": "\"simulation_references_found\": len(self.simulation_references),",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 354,
+      "content": "\"simulation_references_found\": len(self.simulation_references),",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 358,
+      "content": "\"simulation_references\": self.simulation_references,",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 358,
+      "content": "\"simulation_references\": self.simulation_references,",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 365,
+      "content": "\"Block practice endpoints at network level\",",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "practice"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 367,
+      "content": "\"Remove all simulation/demo files\"",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 367,
+      "content": "\"Remove all simulation/demo files\"",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "demo"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 383,
+      "content": "print(f\"\ud83d\udd0d Simulation References: {report['statistics']['simulation_references_found']}\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 383,
+      "content": "print(f\"\ud83d\udd0d Simulation References: {report['statistics']['simulation_references_found']}\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 395,
+      "content": "print(\"\\n\u2705 NO CRITICAL SIMULATION MODE ISSUES FOUND\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./live_mode_forensic_audit.py",
+      "line": 408,
+      "content": "print(\"   5. Monitor for simulation mode references\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "simulation"
+    },
+    {
+      "file": "./config_force_backup.py",
+      "line": 31,
+      "content": "SIM_MODE = False",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "./config_force_backup.py",
+      "line": 32,
+      "content": "PRACTICE = False",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./elite_10_year_backtest.py",
+      "line": 3,
+      "content": "\ud83c\udfc6 ELITE 18+18 PAIR SQUAD - 10 YEAR BACKTESTING SIMULATION",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./elite_10_year_backtest.py",
+      "line": 161,
+      "content": "logger.info(\"\ud83d\ude80 STARTING ELITE 18+18 - 10 YEAR BACKTESTING SIMULATION\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./elite_10_year_backtest.py",
+      "line": 237,
+      "content": "logger.info(\"\u2705 10-Year Simulation Complete!\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Simulation"
+    },
+    {
+      "file": "./simulate_pnl.py",
+      "line": 88,
+      "content": "print(f\"\\n\u2705 PnL Simulation Complete! Summary saved to: {RESULTS_FILE}\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Simulation"
+    },
+    {
+      "file": "./sandbox_replay_backup.py",
+      "line": 29,
+      "content": "print(f\"\\n\ud83c\udfac SANDBOX REPLAY: {symbol}\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SANDBOX"
+    },
+    {
+      "file": "./test_organized_display.py",
+      "line": 5,
+      "content": "Demonstrates organized format with both OANDA and Coinbase data",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Demo"
+    },
+    {
+      "file": "./test_organized_display.py",
+      "line": 97,
+      "content": "print(f\"\ud83d\ude80 STARTING ORGANIZED MARKET DISPLAY DEMONSTRATION\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "DEMO"
+    },
+    {
+      "file": "./test_organized_display.py",
+      "line": 137,
+      "content": "print(f\"\\n{display._colorize('\ud83d\udc4b Organized Market Display Demo Stopped', 'yellow')}\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Demo"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 2,
+      "content": "# \ud83c\udfc6 ENHANCED 10-YEAR SIMULATION WITH SMART LOGIC & ADVANCED ML",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 13,
+      "content": "class Enhanced10YearSimulation:",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Simulation"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 57,
+      "content": "print(\"\ud83c\udfc6 ENHANCED 10-YEAR SIMULATION FRAMEWORK INITIALIZED\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 215,
+      "content": "print(f\"\ud83e\ude96 ENHANCED SWARM SIMULATION - {days_to_liveulate} days\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 291,
+      "content": "print(f\"\ud83c\udfdb\ufe0f ENHANCED MONOLITHIC SIMULATION - {days_to_liveulate} days\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 366,
+      "content": "print(\"\ud83d\ude80 LAUNCHING ENHANCED SIMULATION FRAMEWORK\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 379,
+      "content": "print(\"\\n\ud83d\udcca GENERATING ENHANCED SIMULATION REPORT\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 433,
+      "content": "print(\"\ud83c\udfaf ENHANCED SIMULATION COMPLETE!\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIMULATION"
+    },
+    {
+      "file": "./enhanced_10year_simulation.py",
+      "line": 436,
+      "content": "liveulator = Enhanced10YearSimulation()",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Simulation"
+    },
+    {
+      "file": "./final_auth_audit.py",
+      "line": 152,
+      "content": "\"Coinbase live_mode Disabled\": creds.live_mode == False,",
+      "pattern": "(live_mode.*=.*False)",
+      "match": "live_mode Disabled\": creds.live_mode == False"
+    },
+    {
+      "file": "./config.py",
+      "line": 6,
+      "content": "SIM_MODE = False",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SIM_MODE"
+    },
+    {
+      "file": "./config.py",
+      "line": 7,
+      "content": "PRACTICE = False",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./verify_ml_system.py",
+      "line": 24,
+      "content": "# Test 1: Check models exist",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Test 1: Check mode"
+    },
+    {
+      "file": "./verify_ml_system.py",
+      "line": 25,
+      "content": "print(\"\\n\ud83d\udce6 Testing Model Files...\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Testing Mode"
+    },
+    {
+      "file": "./executor.py",
+      "line": 245,
+      "content": "\"\"\"Test OANDA executor with live_mode trade\"\"\"",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Test OANDA executor with live_mode"
+    },
+    {
+      "file": "./executor.py",
+      "line": 256,
+      "content": "\"\"\"Test Coinbase executor with live_mode trade\"\"\"",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Test Coinbase executor with live_mode"
+    },
+    {
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "content": "SANDBOX_BACKTEST_MODE = True",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SANDBOX"
+    },
+    {
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "content": "SANDBOX_BACKTEST_MODE = True",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "TEST_MODE"
+    },
+    {
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "content": "SANDBOX_BACKTEST_MODE = True",
+      "pattern": "(sandbox.*=.*True)",
+      "match": "SANDBOX_BACKTEST_MODE = True"
+    },
+    {
+      "file": "./legacy_bloat/router_live_hardcoded.py",
+      "line": 166,
+      "content": "# HARDCODED LIVE ENVIRONMENT - NEVER PRACTICE",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./legacy_bloat/router_live_hardcoded.py",
+      "line": 167,
+      "content": "live_environment = \"live\"  # NEVER CHANGE TO PRACTICE",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "PRACTICE"
+    },
+    {
+      "file": "./templates/forex_buy/template.py",
+      "line": 31,
+      "content": "print(f\"[\ud83e\uddea] SANDBOX: Logic executed but no live order placed.\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "SANDBOX"
+    },
+    {
+      "file": "./scripts/create_synthetic_data_and_retrain.py",
+      "line": 124,
+      "content": "print(\"\\n\ud83e\uddea Testing model predictions...\")",
+      "pattern": "(simulation|sim_mode|practice|demo|sandbox|test.*mode)",
+      "match": "Testing mode"
+    }
+  ],
+  "critical_issues": [
+    {
+      "severity": "CRITICAL",
+      "file": "config_live.json",
+      "line": 7,
+      "issue": "Simulation mode enabled: PRACTICE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./final_performance_report.py",
+      "line": 289,
+      "issue": "Simulation mode enabled: Test in Sandbox Mode",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: simulation",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: sim_mode",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: test.*mode",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 54,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 55,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 56,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 56,
+      "issue": "Simulation mode enabled: sandbox.*=.*True",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "issue": "Simulation mode enabled: sim_mode",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "issue": "Simulation mode enabled: sim_mode = true",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "issue": "Simulation mode enabled: practice = true",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 84,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 84,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 140,
+      "issue": "Simulation mode enabled: SIM_MODE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 140,
+      "issue": "Simulation mode enabled: PRACTICE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 141,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "issue": "Simulation mode enabled: simulation",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 170,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 170,
+      "issue": "Simulation mode enabled: api-fxpractice.oanda.com",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 212,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 242,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 269,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 270,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 306,
+      "issue": "Simulation mode enabled: PRACTICE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 307,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 328,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 328,
+      "issue": "Simulation mode enabled: api-fxpractice.oanda.com",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 329,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 329,
+      "issue": "Simulation mode enabled: api.sandbox.coinbase",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./sandbox_replay_backup.py",
+      "line": 29,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "issue": "Simulation mode enabled: TEST_MODE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "issue": "Simulation mode enabled: SANDBOX_BACKTEST_MODE = True",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./templates/forex_buy/template.py",
+      "line": 31,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    }
+  ],
+  "all_issues": [
+    {
+      "severity": "CRITICAL",
+      "file": "config_live.json",
+      "line": 7,
+      "issue": "Simulation mode enabled: PRACTICE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./final_performance_report.py",
+      "line": 289,
+      "issue": "Simulation mode enabled: Test in Sandbox Mode",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: simulation",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: sim_mode",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 49,
+      "issue": "Simulation mode enabled: test.*mode",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 54,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 55,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 56,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 56,
+      "issue": "Simulation mode enabled: sandbox.*=.*True",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "issue": "Simulation mode enabled: sim_mode",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "issue": "Simulation mode enabled: sim_mode = true",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 82,
+      "issue": "Simulation mode enabled: practice = true",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 83,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 84,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 84,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 140,
+      "issue": "Simulation mode enabled: SIM_MODE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 140,
+      "issue": "Simulation mode enabled: PRACTICE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 141,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 150,
+      "issue": "Simulation mode enabled: simulation",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 170,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 170,
+      "issue": "Simulation mode enabled: api-fxpractice.oanda.com",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 212,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 242,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 269,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 270,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 306,
+      "issue": "Simulation mode enabled: PRACTICE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 307,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 316,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "issue": "Simulation mode enabled: demo",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 317,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 328,
+      "issue": "Simulation mode enabled: practice",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 328,
+      "issue": "Simulation mode enabled: api-fxpractice.oanda.com",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 329,
+      "issue": "Simulation mode enabled: sandbox",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./live_mode_forensic_audit.py",
+      "line": 329,
+      "issue": "Simulation mode enabled: api.sandbox.coinbase",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./sandbox_replay_backup.py",
+      "line": 29,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "issue": "Simulation mode enabled: TEST_MODE",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./legacy_bloat/autonomous_startup.py",
+      "line": 2,
+      "issue": "Simulation mode enabled: SANDBOX_BACKTEST_MODE = True",
+      "fix": "Set to live mode only"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "./templates/forex_buy/template.py",
+      "line": 31,
+      "issue": "Simulation mode enabled: SANDBOX",
+      "fix": "Set to live mode only"
+    }
+  ],
+  "recommendations": [
+    "Replace .env with .env.live_only",
+    "Replace config.py with config_live_only.py",
+    "Run enforce_live_mode.py on every startup",
+    "Block practice endpoints at network level",
+    "Implement Constitutional PIN verification",
+    "Remove all simulation/demo files"
+  ]
+}

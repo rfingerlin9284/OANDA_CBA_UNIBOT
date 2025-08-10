@@ -1,0 +1,22 @@
+{
+  "constitutional_pin": "841921",
+  "trading_mode": "LIVE_ONLY",
+  "oanda": {
+    "api_key": "bfc61e32b5218b0b3fe258aa743a1ba8-557ab61dd7909d8407eeb0053bb98f48",
+    "account_id": "001-001-13473069-001",
+    "environment": "live",
+    "api_url": "https://api-fxtrade.oanda.com"
+  },
+  "simulation_eliminated": {
+    "sim_mode": false,
+    "practice": false,
+    "sandbox_mode": false,
+    "demo_mode": false
+  },
+  "live_enforcement": {
+    "live_trading_only": true,
+    "real_money_only": true,
+    "simulation_blocked": true
+  },
+  "generated": "2025-08-08 04:17:23"
+}

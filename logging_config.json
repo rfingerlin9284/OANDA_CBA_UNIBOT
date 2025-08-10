@@ -1,0 +1,33 @@
+{
+    "version": 1,
+    "formatters": {
+        "standard": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        },
+        "enhanced": {
+            "format": "%(asctime)s - 🏆 SWARM - %(name)s - %(levelname)s - %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "enhanced"
+        },
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/enhanced_swarm.log",
+            "maxBytes": 104857600,
+            "backupCount": 30,
+            "level": "DEBUG",
+            "formatter": "standard"
+        }
+    },
+    "loggers": {
+        "ENHANCED_SWARM": {
+            "level": "DEBUG",
+            "handlers": ["console", "file"],
+            "propagate": false
+        }
+    }
+}

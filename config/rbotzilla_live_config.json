@@ -1,0 +1,112 @@
+{
+  "CONSTITUTIONAL_PIN": "841921",
+  "architecture": "RBOTzilla Elite 18+18 Dual-Model",
+  "version": "3.0.0",
+  "deployment_date": "2025-08-06",
+  
+  "oanda": {
+    "api_key": "9f82d69b67bba8def05c99dd9b982e70-699de766b489e14f9ad9649c1a2509f3",
+    "account_id": "001-001-13473069-001",
+    "environment": "live",
+    "base_url": "https://api-fxtrade.oanda.com"
+  },
+  
+  "coinbase": {
+    "api_key_id": "2636c881-b44e-4263-b05d-fb10a5ad1836",
+    "private_key": "s+jUeS54GxpxQ3WOM5uLHHlm9JhCIrtBeE9X1Drn2IfPHg6yie2q+GEAIwRJGkAkZyUOgY0YQE27H1R5CNFGGg==",
+    "environment": "live"
+  },
+  
+  "pairs": {
+    "forex": [
+      "EUR_USD", "USD_JPY", "GBP_USD", "USD_CHF", "AUD_USD", "NZD_USD",
+      "EUR_JPY", "GBP_JPY", "EUR_GBP", "USD_CAD", "EUR_CHF", "AUD_JPY", 
+      "CHF_JPY", "GBP_CHF", "NZD_JPY", "CAD_JPY", "EUR_AUD", "GBP_AUD"
+    ],
+    "crypto": [
+      "BTC-USD", "ETH-USD", "SOL-USD", "DOGE-USD", "XRP-USD", "ADA-USD",
+      "AVAX-USD", "LINK-USD", "MATIC-USD", "DOT-USD", "LTC-USD", "APT-USD",
+      "BCH-USD", "UNI-USD", "OP-USD", "NEAR-USD", "INJ-USD", "XLM-USD"
+    ]
+  },
+  
+  "trading": {
+    "max_position_size": 0.02,
+    "stop_loss_pips": 25,
+    "take_profit_pips": 50,
+    "max_concurrent_trades": 18,
+    "max_daily_trades": 360,
+    "risk_per_trade": 0.02,
+    "instruments": [
+      "EUR_USD", "USD_JPY", "GBP_USD", "USD_CHF", "AUD_USD", "NZD_USD",
+      "EUR_JPY", "GBP_JPY", "EUR_GBP", "USD_CAD", "EUR_CHF", "AUD_JPY",
+      "BTC-USD", "ETH-USD", "SOL-USD", "DOGE-USD", "XRP-USD", "ADA-USD"
+    ]
+  },
+  
+  "behavior": {
+    "sentiment_threshold": 0.70,
+    "volatility_trigger": 0.025,
+    "rsi_threshold": 55,
+    "volume_multiplier": 1.5,
+    "confidence_threshold": 0.65,
+    "breakpoint_confirmation": {
+      "volume_multiplier": 1.5,
+      "rsi_threshold": 55,
+    }
+  },
+  
+  "ml_configuration": {
+    "confidence_threshold": 0.65,
+    "prediction_timeout": 5,
+    "feature_count": 24
+  },
+  
+  "risk_management": {
+    "max_leverage": 20,
+    "break_even_threshold": 0.5,
+    "correlation_limit": 0.6,
+    "volatility_multiplier": 1.5,
+    "drawdown_limit": 0.15,
+    "smart_sizing": true
+  },
+  
+  "execution_strategy": {
+    "model_confidence_threshold": 0.70,
+    "pair_correlation_limit": 0.6,
+    "cycle_interval": 30,
+    "timeout_per_trade": 30,
+    "retry_attempts": 3
+  },
+  
+  "human_algo_synergy": {
+    "crowd_psychology_weight": 0.3,
+    "technical_analysis_weight": 0.4,
+    "ml_prediction_weight": 0.3,
+    "sentiment_sources": ["twitter", "reddit", "news"],
+    "behavioral_triggers": {
+      "fear_threshold": -0.5,
+      "greed_threshold": 0.7,
+      "uncertainty_threshold": 0.3
+    }
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "files": {
+      "system_health": "logs/system_health.log",
+      "live_trades": "logs/live_trades.log",
+      "ml_predictions": "logs/ml_predictions.log",
+      "oco_enforcer": "logs/oco_enforcer.log"
+    }
+  },
+  
+  "alerts": {
+    "telegram_bot_token": "8168818486:AAE3I8NBCNh5gSHXitmyAn4QQT3qrCL8yY0",
+    "telegram_chat_id": "7546584370",
+    "discord_webhook": "https://discord.com/api/webhooks/1366149105168158761/DdhePkvCJltPvpUisbvSI_pIvlBrmQ-ZLzc-IRii0wGV3ZbhKDlkQphTqReLnniAh8W8"
+  },
+  
+  "live_trading_only": true,
+  "real_money_mode": true
+}

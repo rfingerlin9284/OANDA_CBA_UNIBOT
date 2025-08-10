@@ -1,0 +1,561 @@
+import os, sys, time, datetime, threading, random, psutil, json
+import numpy as np
+from typing import Dict, List, Optional
+
+CONSTITUTIONAL_PIN = "841921"
+LIVE_TRADING_ONLY = True
+UNIBOT_ACTIVE = True
+DUAL_EXCHANGE_MODE = True
+PAIRS = ["EUR/USD", "GBP/USD", "USD/JPY", "USD/CHF", "AUD/USD", "NZD/USD", "USD/CAD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "EUR/CHF", "GBP/CHF", "AUD/JPY", "NZD/JPY", "CAD/JPY", "CHF/JPY", "EUR/CAD", "EUR/AUD"]
+
+# Import REAL strategy modules (same as swarm stats)
+try:
+    from fvg_strategy import FVGStrategy
+    from crypto_momentum_strategy import CryptoMomentumStrategy
+    from credentials import get_oanda_credentials
+    from ed25519_coinbase_auth import Ed25519CoinbaseAuth
+    import requests
+except Exception as e:
+    print("❌ ERROR importing strategy modules:", e)
+    sys.exit(1)
+
+# Initialize REAL strategies (same ML models that generated swarm stats)
+print("🧠 Loading REAL ML models and strategies...")
+fvg_strategy = FVGStrategy()
+crypto_strategy = CryptoMomentumStrategy()
+
+# API credentials - HARD CODED FOR LIVE TRADING
+try:
+    # HARD CODED OANDA LIVE CREDENTIALS
+    OANDA_CREDS = {
+        'access_token': '9f82d69b67bba8def05c99dd9b982e70-699de766b489e14f9ad9649c1a2509f3',
+        'account_id': '001-001-13473069-001',
+        'environment': 'live',
+        'api_url': 'https://api-fxtrade.oanda.com'
+    }
+    print(f"✅ HARD CODED OANDA credentials loaded for account: {OANDA_CREDS['account_id'][:8]}...")
+except:
+    print("❌ Failed to load OANDA credentials")
+    sys.exit(1)
+
+# HARD CODED COINBASE ED25519 CREDENTIALS
+API_KEY = "bbd70034-6acb-4c1c-8d7a-4358a434ed4b"
+SECRET_KEY = "yN8Q2bgm7bCGlLptrbixoGO+SIUu1cfyVyh/uTzk4BGXGzz1IrbEBBFJa+6dw4O3Ar4pkbWKW1SOeUB/r8n1kg=="
+coinbase_auth = Ed25519CoinbaseAuth(API_KEY, SECRET_KEY)
+
+def execute_coinbase_crypto_trade(signal):
+    """Execute LIVE crypto trade on Coinbase Advanced with Ed25519 signing"""
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+    
+    try:
+        print(f"🪙 [{timestamp}] COINBASE CRYPTO ORDER EXECUTION for {signal['pair']}")
+        
+        # Convert forex signal to crypto equivalent
+        crypto_pair = convert_to_crypto_pair(signal['pair'])
+        if not crypto_pair:
+            print(f"⚠️ [{timestamp}] No crypto equivalent for {signal['pair']}")
+            return {"success": False, "error": "No crypto pair mapping"}
+        
+        print(f"🔄 [{timestamp}] Mapped {signal['pair']} -> {crypto_pair}")
+        
+        # Calculate crypto position size (smaller than forex)
+        crypto_units = calculate_crypto_position_size(signal.get('units', 1000))
+        
+        # Create Coinbase order using Ed25519 authentication
+        order_data = {
+            "product_id": crypto_pair,
+            "side": signal['direction'].lower(),
+            "type": "market",
+            "size": str(crypto_units)
+        }
+        
+        print(f"📦 [{timestamp}] COINBASE ORDER PAYLOAD:")
+        print(json.dumps(order_data, indent=2))
+        
+        # Submit order with Ed25519 signed headers
+        headers = coinbase_auth.get_headers("POST", "/api/v3/brokerage/orders", json.dumps(order_data))
+        
+print(f"\n📦 [FULL NUCLEAR] ORDER PAYLOAD:\n{json.dumps(order_data, indent=2)}")
+
+        response = requests.post(
+            "https://api.coinbase.com/api/v3/brokerage/orders",
+            headers=headers,
+            json=order_data
+        )
+        
+        print(f"📡 [{timestamp}] COINBASE RESPONSE STATUS: {response.status_code}")
+with open("logs/full_nuclear_oanda_responses.log", "a") as logf:
+    logf.write(f"{datetime.datetime.now().isoformat()} | STATUS: {response.status_code} | BODY: {response.text}\n")
+
+        print(f"📡 [{timestamp}] COINBASE RESPONSE: {response.text}")
+with open("logs/full_nuclear_oanda_responses.log", "a") as logf:
+    logf.write(f"{datetime.datetime.now().isoformat()} | STATUS: {response.status_code} | BODY: {response.text}\n")
+
+        
+        if response.status_code in [200, 201]:
+            order_response = response.json()
+            order_id = order_response.get('order_id', 'UNKNOWN')
+            
+            print(f"✅ [{timestamp}] COINBASE CRYPTO ORDER EXECUTED: {order_id}")
+            print(f"🪙 CRYPTO SUCCESS: {order_id} | {crypto_pair} | {signal['direction']} | Size: {crypto_units}")
+            
+            # Log successful crypto execution
+            with open("logs/coinbase_executions.log", "a") as f:
+                f.write(f"{datetime.datetime.now().isoformat()} | COINBASE ORDER: {order_id} | {crypto_pair} | {json.dumps(order_data)}\n")
+            
+            return {"success": True, "order_id": order_id, "crypto_pair": crypto_pair}
+        else:
+            error_msg = f"Coinbase order failed: {response.status_code} | {response.text}"
+            print(f"❌ [{timestamp}] {error_msg}")
+            return {"success": False, "error": error_msg}
+            
+    except Exception as e:
+        error_msg = f"Coinbase execution exception: {e}"
+        print(f"💥 [{timestamp}] {error_msg}")
+        return {"success": False, "error": str(e)}
+
+def convert_to_crypto_pair(forex_pair):
+    """Convert forex pair to crypto equivalent"""
+    crypto_mapping = {
+        "EUR/USD": "BTC-USD",
+        "GBP/USD": "ETH-USD", 
+        "USD/JPY": "LTC-USD",
+        "AUD/USD": "BCH-USD",
+        "USD/CHF": "ADA-USD",
+        "USD/CAD": "DOT-USD",
+        "NZD/USD": "LINK-USD",
+        "EUR/GBP": "XLM-USD"
+    }
+    return crypto_mapping.get(forex_pair, None)
+
+def calculate_crypto_position_size(forex_units):
+    """Calculate appropriate crypto position size based on forex units"""
+    # Scale down crypto positions (much smaller than forex)
+    if forex_units >= 50000:
+        return "0.01"  # Large forex position -> 0.01 BTC
+    elif forex_units >= 20000:
+        return "0.005"  # Medium forex position -> 0.005 BTC
+    else:
+        return "0.001"  # Small forex position -> 0.001 BTC
+
+def get_current_balance():
+    """Get REAL account balance from OANDA API - HARD CODED ENDPOINTS"""
+    try:
+        # HARD CODED OANDA LIVE URL AND CREDENTIALS
+        url = f"https://api-fxtrade.oanda.com/v3/accounts/001-001-13473069-001"
+        headers = {"Authorization": "Bearer 9f82d69b67bba8def05c99dd9b982e70-699de766b489e14f9ad9649c1a2509f3"}
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            account_data = response.json()
+            balance = float(account_data['account']['balance'])
+            print(f"💰 Live account balance: ${balance:.2f}")
+            return balance
+    except Exception as e:
+        print(f"❌ Error fetching balance: {e}")
+    return 1359.71  # Fallback
+
+def get_live_candles(pair, count=50):
+    """Get REAL OANDA price data for FVG analysis - HARD CODED ENDPOINTS"""
+    try:
+        # Convert pair format: EUR/USD -> EUR_USD
+        instrument = pair.replace('/', '_')
+        # HARD CODED OANDA LIVE URL AND CREDENTIALS
+        url = f"https://api-fxtrade.oanda.com/v3/instruments/{instrument}/candles"
+        headers = {"Authorization": "Bearer 9f82d69b67bba8def05c99dd9b982e70-699de766b489e14f9ad9649c1a2509f3"}
+        params = {
+            "count": count,
+            "granularity": "M15",  # 15-minute candles for FVG strategy
+            "price": "M"  # Mid prices
+        }
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            candles = []
+            for candle in data['candles']:
+                if candle['complete']:
+                    candles.append({
+                        'high': float(candle['mid']['h']),
+                        'low': float(candle['mid']['l']),
+                        'close': float(candle['mid']['c']),
+                        'open': float(candle['mid']['o']),
+                        'timestamp': candle['time']
+                    })
+            return candles
+    except Exception as e:
+        print(f"❌ Error fetching candles for {pair}: {e}")
+    return []
+
+def get_latest_price(pair):
+    """Get REAL-TIME price from OANDA - HARD CODED ENDPOINTS"""
+    try:
+        instrument = pair.replace('/', '_')
+        # HARD CODED OANDA LIVE URL AND CREDENTIALS
+        url = f"https://api-fxtrade.oanda.com/v3/pricing"
+        headers = {"Authorization": "Bearer 9f82d69b67bba8def05c99dd9b982e70-699de766b489e14f9ad9649c1a2509f3"}
+        params = {"instruments": instrument}
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            if data['prices']:
+                price_data = data['prices'][0]
+                bid = float(price_data['bids'][0]['price'])
+                ask = float(price_data['asks'][0]['price'])
+                return (bid + ask) / 2  # Mid price
+    except Exception as e:
+        print(f"❌ Error fetching price for {pair}: {e}")
+    return 1.1620 if "USD" in pair else 30000.0
+
+def get_live_position_size(account_balance, price, pair):
+    """Position sizing using REAL FVG strategy risk management - NUCLEAR SIZES"""
+    # 🚀 NUCLEAR POSITION SIZING - NO MORE MICRO TRADES!
+    RISK_PERCENT = 0.10  # 10% risk per trade for REAL profits
+    MIN_UNITS = 50000  # Minimum 50K units = $50K notional
+    MAX_UNITS = 200000  # Maximum 200K units = $200K notional
+    
+    # Calculate position based on available margin (not just 2%)
+    available_margin = account_balance * 0.8  # Use 80% of available balance
+    leverage = 50  # OANDA's standard leverage
+    max_notional = available_margin * leverage
+    
+    # Calculate units based on notional value
+    notional_target = min(max_notional * 0.25, 100000)  # Target $100K notional max
+    units = int(notional_target)
+    
+    # Enforce minimum and maximum bounds
+    units = max(units, MIN_UNITS)  # Never less than 50K units
+    units = min(units, MAX_UNITS)  # Never more than 200K units
+    
+    print(f"🚀 NUCLEAR POSITION SIZE: {units:,} units | Notional: ${units:,} | Margin Used: ${units/leverage:.2f}")
+    return units
+
+def ml_narrate(signal):
+    """Enhanced ML narration with REAL strategy data"""
+    confidence_pct = signal.get('confidence', 0) * 100
+    fvg_type = signal.get('signal_type', 'NONE')
+    gap_size = signal.get('gap_size', 0)
+    risk = signal.get('risk', 0)
+    reward = signal.get('reward', 0)
+    rr_ratio = reward / risk if risk > 0 else 0
+    
+    msg = (f"[FVG-LIVE] {signal.get('pair','?')} | {signal.get('direction','?')} | "
+           f"Conf: {confidence_pct:.1f}% | FVG: {fvg_type} | "
+           f"Gap: {gap_size:.2f}% | Entry: {signal.get('entry','?')} | "
+           f"SL: {signal.get('sl','?')} | TP: {signal.get('tp','?')} | "
+           f"R:R = 1:{rr_ratio:.1f}")
+    
+    print(f"🎯 {msg}")
+    
+    # Enhanced logging
+    with open("logs/live_trading_feed.log", "a") as f:
+        f.write(f"{datetime.datetime.now().isoformat()} | {msg}\n")
+    with open("logs/ml_predictions.log", "a") as f:
+        f.write("FVG SIGNAL: " + json.dumps(signal) + "\n")
+    with open("logs/fvg_analysis.log", "a") as f:
+        f.write(f"FVG Analysis: {signal.get('pair')} | Indicators: {signal.get('indicators', {})} | Fibonacci: {signal.get('fib_confluence', False)}\n")
+
+def execute_real_oanda_trade(signal):
+    """Execute REAL trade via OANDA API - NUCLEAR LEVEL LOGGING WITH FULL OCO"""
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+    
+    try:
+        print(f"🚀 [{timestamp}] NUCLEAR LIVE ORDER EXECUTION for {signal['pair']}")
+        print(f"🟢 [ML COMMANDER] {signal['pair']} | {signal['direction']} | Conf: {signal.get('confidence', 0)*100:.1f}% | FVG: {signal.get('signal_type', 'NONE')}")
+        print(f"➡️ [ORDER] {signal['pair']} {signal['direction']} Entry: {signal.get('entry', 'MARKET')} | TP: {signal.get('tp', 'N/A')} | SL: {signal.get('sl', 'N/A')}")
+        
+        # Convert pair format
+        instrument = signal['pair'].replace('/', '_')
+        print(f"🔧 [{timestamp}] Converted instrument: {instrument}")
+        
+        # Determine order side and position size
+        side = 1 if signal['direction'] == 'BUY' else -1
+        units = side * signal.get('units', 100000)  # Default 100K units (NUCLEAR SIZE)
+        print(f"🔧 [{timestamp}] Order side: {signal['direction']} | Units: {units:,}")
+        print(f"💥 NUCLEAR TRADE SIZE: {abs(units):,} units = ${abs(units):,} notional value")
+        
+        # Create FULL OCO order payload with TP/SL protection
+        order_data = {
+            "order": {
+                "type": "MARKET",
+                "instrument": instrument,
+                "units": str(units),
+                "positionFill": "DEFAULT",
+                "timeInForce": "FOK"
+            }
+        }
+        
+        # Add TP and SL if available (OCO protection)
+        if signal.get('tp'):
+            order_data["order"]["takeProfitOnFill"] = {
+                "price": str(signal['tp']),
+                "timeInForce": "GTC"
+            }
+            print(f"🎯 [{timestamp}] TAKE PROFIT: {signal['tp']}")
+        
+        if signal.get('sl'):
+            order_data["order"]["stopLossOnFill"] = {
+                "price": str(signal['sl']),
+                "timeInForce": "GTC"
+            }
+            print(f"🛡️ [{timestamp}] STOP LOSS: {signal['sl']}")
+        
+        print(f"📦 [{timestamp}] FULL OCO ORDER PAYLOAD:")
+        print(json.dumps(order_data, indent=2))
+        
+        # Submit order to OANDA - HARD CODED LIVE ENDPOINT AND CREDENTIALS
+        url = f"https://api-fxtrade.oanda.com/v3/accounts/001-001-13473069-001/orders"
+        headers = {
+            "Authorization": "Bearer 9f82d69b67bba8def05c99dd9b982e70-699de766b489e14f9ad9649c1a2509f3",
+            "Content-Type": "application/json"
+        }
+        
+        print(f"🌐 [{timestamp}] SENDING TO: {url}")
+        
+print(f"\n📦 [FULL NUCLEAR] ORDER PAYLOAD:\n{json.dumps(order_data, indent=2)}")
+
+        response = requests.post(url, headers=headers, json=order_data)
+        
+        print(f"📡 [{timestamp}] RESPONSE STATUS: {response.status_code}")
+with open("logs/full_nuclear_oanda_responses.log", "a") as logf:
+    logf.write(f"{datetime.datetime.now().isoformat()} | STATUS: {response.status_code} | BODY: {response.text}\n")
+
+        print(f"📡 [{timestamp}] RESPONSE BODY: {response.text}")
+with open("logs/full_nuclear_oanda_responses.log", "a") as logf:
+    logf.write(f"{datetime.datetime.now().isoformat()} | STATUS: {response.status_code} | BODY: {response.text}\n")
+
+        
+        if response.status_code == 201:
+            order_response = response.json()
+            print(f"🎯 [{timestamp}] ORDER RESPONSE JSON:")
+            print(json.dumps(order_response, indent=2))
+            
+            if 'orderFillTransaction' in order_response:
+                order_id = order_response['orderFillTransaction']['id']
+                fill_price = order_response['orderFillTransaction'].get('price', 'N/A')
+                
+                print(f"✅ [{timestamp}] 🚀 LIVE OANDA ORDER EXECUTED: {order_id}")
+                print(f"🎯 NUCLEAR SUCCESS: {order_id} | {signal['pair']} | {signal['direction']} | Units: {units} | Fill: {fill_price}")
+                print(f"🎯 OCO PROTECTION: TP={signal.get('tp', 'N/A')} | SL={signal.get('sl', 'N/A')}")
+                
+                # Enhanced success logging
+                success_msg = f"LIVE ORDER EXECUTED: {signal['pair']} {signal['direction']} @ {fill_price}, TP={signal.get('tp', 'N/A')}, SL={signal.get('sl', 'N/A')}, ID={order_id}"
+                with open("logs/live_trades.log", "a") as f:
+                    f.write(f"{success_msg}\n")
+                
+                with open("logs/live_executions.log", "a") as f:
+                    f.write(f"{datetime.datetime.now().isoformat()} | {success_msg} | {json.dumps(signal)}\n")
+                
+                # Start OCO monitoring in background
+                import threading
+                oco_thread = threading.Thread(target=monitor_oco_order, args=(order_id, signal['pair'], signal.get('tp'), signal.get('sl')))
+                oco_thread.daemon = True
+                oco_thread.start()
+                
+                return {"success": True, "order_id": order_id, "fill_price": fill_price}
+            else:
+                print(f"⚠️ [{timestamp}] ORDER CREATED BUT NO FILL TRANSACTION")
+                print(f"⚠️ Available keys: {list(order_response.keys())}")
+                return {"success": False, "error": "No fill transaction"}
+        else:
+            error_msg = f"OANDA ORDER FAILED: {response.status_code} | {response.text}"
+            print(f"❌ [{timestamp}] {error_msg}")
+            
+            # Log failed execution
+            with open("logs/order_failures.log", "a") as f:
+                f.write(f"{datetime.datetime.now().isoformat()} | {error_msg} | Signal: {json.dumps(signal)}\n")
+            
+            return {"success": False, "error": error_msg}
+            
+    except Exception as e:
+        error_msg = f"NUCLEAR EXECUTION EXCEPTION: {e}"
+        print(f"💥 [{timestamp}] {error_msg}")
+        print(f"💥 Exception type: {type(e).__name__}")
+        import traceback
+        traceback.print_exc()
+        
+        # Log exception
+        with open("logs/execution_exceptions.log", "a") as f:
+            f.write(f"{datetime.datetime.now().isoformat()} | {error_msg} | Signal: {json.dumps(signal)}\n")
+        
+        return {"success": False, "error": str(e)}
+
+def monitor_oco_order(order_id, pair, tp_price, sl_price):
+    """Monitor OCO order execution in background"""
+    try:
+        print(f"🔍 [OCO MONITOR] Starting for Order {order_id} | {pair} | TP={tp_price} | SL={sl_price}")
+        
+        # Import OCO enforcement
+        from oco_dynamic_adjuster import enforce_oco
+        enforce_oco(order_id, pair, "ACTIVE")
+        
+    except Exception as e:
+        print(f"❌ OCO Monitor error for {order_id}: {e}")
+
+def process_live_signal(signal):
+    """Process ML signal and execute live trades on BOTH OANDA and COINBASE if valid"""
+    if not signal:
+        return False
+    
+    confidence = signal.get('confidence', 0)
+    print(f"🧠 [SIGNAL PROCESSOR] {signal['pair']} | Conf: {confidence*100:.1f}% | Type: {signal.get('signal_type', 'UNKNOWN')}")
+    
+    # Check confidence threshold
+    if confidence >= 0.80:  # 80% minimum confidence
+        print(f"✅ [SIGNAL APPROVED] {signal['pair']} meets confidence threshold")
+        
+        oanda_success = False
+        coinbase_success = False
+        
+        # Execute OANDA forex trade
+        print(f"🚀 [OANDA EXECUTION] Executing {signal['pair']} on OANDA...")
+        oanda_result = execute_real_oanda_trade(signal)
+        
+        if oanda_result.get("success"):
+            oanda_success = True
+            print(f"✅ [OANDA SUCCESS] {signal['pair']} {signal['direction']} | Order ID: {oanda_result.get('order_id')} | Fill: {oanda_result.get('fill_price')}")
+        else:
+            print(f"❌ [OANDA FAILED] {signal['pair']} | Error: {oanda_result.get('error')}")
+        
+        # Execute Coinbase crypto trade (parallel to OANDA)
+        print(f"🪙 [COINBASE EXECUTION] Executing crypto equivalent on Coinbase...")
+        coinbase_result = execute_coinbase_crypto_trade(signal)
+        
+        if coinbase_result.get("success"):
+            coinbase_success = True
+            print(f"✅ [COINBASE SUCCESS] {coinbase_result.get('crypto_pair')} | Order ID: {coinbase_result.get('order_id')}")
+        else:
+            print(f"❌ [COINBASE FAILED] {signal['pair']} | Error: {coinbase_result.get('error')}")
+        
+        # Log dual execution results
+        execution_summary = {
+            "signal": signal['pair'],
+            "direction": signal['direction'],
+            "confidence": confidence,
+            "oanda_success": oanda_success,
+            "coinbase_success": coinbase_success,
+            "timestamp": datetime.datetime.now().isoformat()
+        }
+        
+        with open("logs/dual_execution.log", "a") as f:
+            f.write(f"{json.dumps(execution_summary)}\n")
+        
+        # Consider success if either exchange executed
+        total_success = oanda_success or coinbase_success
+        
+        if total_success:
+            if oanda_success and coinbase_success:
+                print(f"🚀 [DUAL SUCCESS] {signal['pair']} executed on BOTH OANDA and COINBASE!")
+            elif oanda_success:
+                print(f"🎯 [OANDA ONLY] {signal['pair']} executed on OANDA (Coinbase failed)")
+            else:
+                print(f"🪙 [COINBASE ONLY] {signal['pair']} crypto executed on Coinbase (OANDA failed)")
+        else:
+            print(f"💥 [TOTAL FAILURE] {signal['pair']} failed on BOTH exchanges")
+        
+        return total_success
+    else:
+        print(f"⚠️ [SIGNAL REJECTED] {signal['pair']} confidence {confidence*100:.1f}% below 80% threshold")
+        return False
+
+def trade_runner(pair):
+    """REAL FVG strategy runner using same ML models as swarm stats with LIVE ORDER EXECUTION"""
+    print(f"🚀 Starting REAL FVG analysis for {pair}")
+    
+    # Initialize pair-specific counters
+    signal_count = 0
+    execution_count = 0
+    successful_trades = 0
+    
+    while True:
+        try:
+            # Get REAL market data from OANDA
+            candles = get_live_candles(pair, 50)
+            if len(candles) < 25:
+                print(f"⚠️ Insufficient data for {pair}, waiting...")
+                time.sleep(60)
+                continue
+            
+            # Run REAL FVG strategy analysis (same as swarm)
+            signal = fvg_strategy.scan_for_signals(candles, pair)
+            
+            if signal and fvg_strategy.validate_setup(signal):
+                signal_count += 1
+                print(f"🎯 FVG SIGNAL #{signal_count} for {pair}")
+                
+                # Calculate position size using real balance
+                account_balance = get_current_balance()
+                current_price = get_latest_price(pair)
+                units = get_live_position_size(account_balance, current_price, pair)
+units = max(50000, int(units))  # === FULL NUCLEAR PATCH: NEVER LESS THAN 50K UNITS
+print(f"\n🚨 [FULL NUCLEAR] UNITS SENT: {units}")
+signal["units"] = units
+
+                signal['units'] = units
+                
+                # Enhanced ML narration with real data
+                ml_narrate(signal)
+                
+                # 🚀 NUCLEAR LIVE ORDER EXECUTION
+                print(f"🔥 [LIVE EXECUTION] Processing signal for {pair}")
+                trade_executed = process_live_signal(signal)
+                
+                if trade_executed:
+                    successful_trades += 1
+                    execution_count += 1
+                    print(f"🎯 LIVE TRADE #{execution_count} EXECUTED for {pair} | Success Rate: {successful_trades}/{signal_count}")
+                    
+                    # Enhanced success logging
+                    success_msg = f"NUCLEAR SUCCESS: {pair} {signal['direction']} | Trade #{execution_count} | Conf: {signal.get('confidence', 0)*100:.1f}%"
+                    with open("logs/nuclear_successes.log", "a") as f:
+                        f.write(f"{datetime.datetime.now().isoformat()} | {success_msg}\n")
+                    
+                    # Wait before next signal (cooldown after successful trade)
+                    time.sleep(300)  # 5-minute cooldown after successful execution
+                else:
+                    print(f"❌ TRADE EXECUTION FAILED for {pair} signal #{signal_count}")
+                    time.sleep(60)   # Retry in 1 minute on failure
+            else:
+                # No signal, wait and retry
+                time.sleep(30)  # Check every 30 seconds for new FVG patterns
+                
+        except Exception as e:
+            print(f"❌ Error in NUCLEAR FVG runner for {pair}: {e}")
+            import traceback
+            traceback.print_exc()
+            time.sleep(60)
+
+def start_swarm():
+    print("🚀 STARTING REAL FVG STRATEGY SWARM (SAME AS SWARM STATS)")
+    print("🔐 Constitutional PIN: 841921")
+    print(f"📊 Trading {len(PAIRS)} forex pairs with REAL FVG strategy")
+    print("🧠 Using SAME ML models that generated swarm statistics")
+    print("=" * 70)
+    
+    # Verify strategy initialization
+    print(f"✅ FVG Strategy initialized: Gap threshold {fvg_strategy.FVG_GAP_THRESHOLD*100}%")
+    print(f"✅ Min confidence: {fvg_strategy.MIN_CONFIDENCE}")
+    print(f"✅ Risk:Reward ratio: 1:{fvg_strategy.RISK_REWARD_RATIO}")
+    
+    threads = []
+    for pair in PAIRS:
+        print(f"🎯 Launching REAL FVG thread for {pair}")
+        t = threading.Thread(target=trade_runner, args=(pair,))
+        t.daemon = True
+        t.start()
+        threads.append(t)
+        time.sleep(2)  # Stagger thread starts
+    
+    print(f"✅ All {len(threads)} REAL FVG strategy threads launched")
+    print("🔥 LIVE TRADING WITH REAL ML MODELS ACTIVE")
+    
+    # Keep main thread alive
+    try:
+        for t in threads:
+            t.join()
+    except KeyboardInterrupt:
+        print("🛑 FVG Swarm stopped by user")
+
+if __name__ == "__main__":
+    print("🚀 UNIBOT 18-PAIR REAL FVG SWARM MODE LIVE")
+    print("🎯 Using REAL Fair Value Gap Strategy & ML Models")
+    print("📈 SAME LOGIC AS SWARM STATISTICS")
+    start_swarm()

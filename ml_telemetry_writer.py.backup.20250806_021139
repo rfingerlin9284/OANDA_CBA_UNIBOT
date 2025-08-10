@@ -1,0 +1,43 @@
+import json, time, os
+from datetime import datetime
+
+TELEMETRY_FILE = "dashboard/static/js/telemetry.json"
+LOG_FILE = "logs/ml_predictions.log"
+
+def tail_predictions():
+    if not os.path.exists(LOG_FILE):
+        open(LOG_FILE, 'a').close()
+
+    with open(LOG_FILE, "r") as f:
+        f.seek(0, os.SEEK_END)  # go to the end of the file
+        while True:
+            line = f.readline()
+            if not line:
+                time.sleep(1)
+                continue
+            if "ML DECISION:" in line:
+                yield line.strip()
+
+def parse_decision(line):
+    try:
+        parts = line.split("ML DECISION:")[-1].strip()
+        model_data = json.loads(parts)
+        return {
+            "model_name": model_data.get("model", "unknown"),
+            "confidence": model_data.get("confidence", 0),
+            "decision": model_data.get("decision", "none"),
+            "comment": model_data.get("comment", ""),
+            "status": "RUNNING",
+            "updated_at": datetime.utcnow().isoformat() + "Z"
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+def write_telemetry(data):
+    with open(TELEMETRY_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+if __name__ == "__main__":
+    for line in tail_predictions():
+        data = parse_decision(line)
+        write_telemetry(data)

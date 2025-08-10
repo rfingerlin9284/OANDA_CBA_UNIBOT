@@ -1,0 +1,10 @@
+.unibot_env/
+.env
+.env.*
+__pycache__/
+*.pyc
+logs/
+*.log
+.vscode/
+.DS_Store
+Thumbs.db

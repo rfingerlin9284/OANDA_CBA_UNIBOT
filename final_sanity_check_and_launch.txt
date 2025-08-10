@@ -1,0 +1,228 @@
+#!/bin/bash
+# ✅ FINAL RBOTzilla LIVE REPAIR + LAUNCH SYSTEM
+# Location: /home/ing/overlord/wolfpack-lite/oanda_cba_unibot
+
+BASE="/home/ing/overlord/wolfpack-lite/oanda_cba_unibot"
+LOG_FILE="$BASE/logs/system_repair.log"
+mkdir -p "$BASE/logs"
+echo "🩺 RBOTZILLA AUTO-REPAIR — $(date)" | tee -a "$LOG_FILE"
+echo "===================================" | tee -a "$LOG_FILE"
+
+# [1/6] Check and Create Logs
+echo "🔧 [1/6] Checking and Creating Logs..." | tee -a "$LOG_FILE"
+LOGS=("live_trades.log" "ml_predictions.log" "system_health.log" "oco_enforcer.log")
+ALL_LOGS_OK=1
+for log in "${LOGS[@]}"; do
+  if [ ! -f "$BASE/logs/$log" ]; then
+    touch "$BASE/logs/$log"
+    echo "✅ Created missing log: $log" | tee -a "$LOG_FILE"
+  else
+    echo "🟢 Log exists: $log" | tee -a "$LOG_FILE"
+  fi
+done
+
+# [2/6] Verify Python Processes
+echo "🔍 [2/6] Verifying Python Processes..." | tee -a "$LOG_FILE"
+RUNNING=$(ps aux | grep -E "(main.py|dashboard/app.py|live_battle_narrator.py)" | grep -v grep)
+ALL_PROCESSES_OK=1
+if echo "$RUNNING" | grep -q main.py; then
+  echo "✅ main.py running" | tee -a "$LOG_FILE"
+else
+  echo "❌ main.py NOT running - Starting..." | tee -a "$LOG_FILE"
+  source "$BASE/coinbase_env/bin/activate"
+  python3 "$BASE/main.py" &
+  sleep 2
+  if ps aux | grep -q "[m]ain.py"; then
+    echo "✅ main.py started" | tee -a "$LOG_FILE"
+  else
+    echo "❌ main.py failed to start" | tee -a "$LOG_FILE"
+    ALL_PROCESSES_OK=0
+  fi
+fi
+if echo "$RUNNING" | grep -q dashboard/app.py; then
+  echo "✅ dashboard running" | tee -a "$LOG_FILE"
+else
+  echo "❌ dashboard NOT running - Starting..." | tee -a "$LOG_FILE"
+  source "$BASE/coinbase_env/bin/activate"
+  python3 "$BASE/dashboard/app.py" &
+  sleep 2
+  if ps aux | grep -q "[d]ashboard/app.py"; then
+    echo "✅ dashboard started" | tee -a "$LOG_FILE"
+  else
+    echo "❌ dashboard failed to start" | tee -a "$LOG_FILE"
+    ALL_PROCESSES_OK=0
+  fi
+fi
+if echo "$RUNNING" | grep -q live_battle_narrator.py; then
+  echo "✅ narrator active" | tee -a "$LOG_FILE"
+else
+  echo "❌ narrator NOT running - Starting..." | tee -a "$LOG_FILE"
+  source "$BASE/coinbase_env/bin/activate"
+  python3 "$BASE/live_battle_narrator.py" &
+  sleep 2
+  if ps aux | grep -q "[l]ive_battle_narrator.py"; then
+    echo "✅ narrator started" | tee -a "$LOG_FILE"
+  else
+    echo "❌ narrator failed to start" | tee -a "$LOG_FILE"
+    ALL_PROCESSES_OK=0
+  fi
+fi
+
+# [3/6] Test Coinbase SDK Connection
+echo "🔗 [3/6] Testing Coinbase SDK Connection..." | tee -a "$LOG_FILE"
+source "$BASE/coinbase_env/bin/activate"
+pip install -q coinbase-advanced flask-socketio
+COINBASE_OK=0
+python3 <<EOF | tee -a "$LOG_FILE"
+from coinbase_advanced import CoinbaseAdvancedTrade
+from credentials import WolfpackCredentials
+import logging
+logging.basicConfig(filename='$BASE/logs/system_health.log', level=logging.INFO)
+creds = WolfpackCredentials()
+client = CoinbaseAdvancedTrade(
+    api_key=creds.COINBASE_API_KEY,
+    secret_key=creds.COINBASE_API_SECRET
+)
+try:
+    accounts = client.get_accounts(limit=1)
+    print(f"✅ COINBASE LIVE CONNECTED: {accounts['accounts'][0]['currency']} = {accounts['accounts'][0]['available_balance']['value']}")
+    logging.info("✅ COINBASE CONNECTION SUCCESS")
+    exit(0)
+except Exception as e:
+    print(f"❌ COINBASE CONNECTION FAILED: {e}")
+    logging.error(f"❌ COINBASE CONNECTION FAILED: {e}")
+    exit(1)
+EOF
+if [ $? -eq 0 ]; then
+  COINBASE_OK=1
+else
+  echo "⚠️ Coinbase API failed - Check credentials in credentials.py" | tee -a "$LOG_FILE"
+fi
+
+# [4/6] Verify Dashboard WebSocket Interface
+echo "🧪 [4/6] Verifying Dashboard WebSocket Interface..." | tee -a "$LOG_FILE"
+DASHBOARD_OK=0
+if curl -s http://localhost:5001/api/stats | grep -q "status"; then
+  echo "✅ Dashboard API live" | tee -a "$LOG_FILE"
+  DASHBOARD_OK=1
+else
+  echo "❌ Dashboard API not reachable - Restarting..." | tee -a "$LOG_FILE"
+  pkill -f dashboard/app.py
+  source "$BASE/coinbase_env/bin/activate"
+  python3 "$BASE/dashboard/app.py" &
+  sleep 2
+  if curl -s http://localhost:5001/api/stats | grep -q "status"; then
+    echo "✅ Dashboard API restarted successfully" | tee -a "$LOG_FILE"
+    DASHBOARD_OK=1
+  else
+    echo "❌ Dashboard API still unreachable" | tee -a "$LOG_FILE"
+  fi
+fi
+
+# [5/6] Validate Router Scripts
+echo "📡 [5/6] Validating Router Scripts..." | tee -a "$LOG_FILE"
+ROUTERS_OK=1
+if [ -f "$BASE/router_oanda_live.py" ]; then
+  echo "✅ OANDA router exists" | tee -a "$LOG_FILE"
+else
+  echo "❌ Missing router_oanda_live.py - Creating..." | tee -a "$LOG_FILE"
+  cat << 'EOR' > "$BASE/router_oanda_live.py"
+import oandapyV20
+from oandapyV20.endpoints.pricing import PricingStream
+from credentials import WolfpackCredentials
+import logging
+logging.basicConfig(filename='logs/system_health.log', level=logging.INFO)
+creds = WolfpackCredentials()
+api = oandapyV20.API(access_token=creds.OANDA_API_KEY, environment='live')
+def stream_oanda():
+    params = {"instruments": ",".join(["EUR/USD", "USD/JPY", "GBP/USD", "USD/CHF", "AUD/USD", "NZD/USD", "EUR/JPY", "GBP/JPY", "EUR/GBP", "USD/CAD", "EUR/CHF", "AUD/JPY", "CHF/JPY", "GBP/CHF", "NZD/JPY", "CAD/JPY", "EUR/AUD", "GBP/AUD"])}
+    pricing = PricingStream(creds.OANDA_ACCOUNT_ID, params=params)
+    for tick in api.request(pricing):
+        logging.info(f"📊 OANDA TICK: {tick}")
+        print(f"📊 OANDA TICK: {tick}")
+if __name__ == "__main__":
+    stream_oanda()
+EOR
+  chmod +x "$BASE/router_oanda_live.py"
+  ROUTERS_OK=0
+fi
+if [ -f "$BASE/router_coinbase_live.py" ]; then
+  echo "✅ Coinbase router exists" | tee -a "$LOG_FILE"
+else
+  echo "❌ Missing router_coinbase_live.py - Creating..." | tee -a "$LOG_FILE"
+  cat << 'EOR' > "$BASE/router_coinbase_live.py"
+from coinbase_advanced import CoinbaseAdvancedTrade
+from credentials import WolfpackCredentials
+import logging
+logging.basicConfig(filename='logs/system_health.log', level=logging.INFO)
+creds = WolfpackCredentials()
+client = CoinbaseAdvancedTrade(api_key=creds.COINBASE_API_KEY, secret_key=creds.COINBASE_API_SECRET)
+def stream_coinbase():
+    try:
+        prices = client.get_market_trades("BTC-USD", limit=10)
+        logging.info(f"📊 COINBASE TICK: {prices}")
+        print(f"📊 COINBASE TICK: {prices}")
+    except Exception as e:
+        logging.error(f"❌ COINBASE STREAM FAILED: {e}")
+        print(f"❌ COINBASE STREAM FAILED: {e}")
+if __name__ == "__main__":
+    stream_coinbase()
+EOR
+  chmod +x "$BASE/router_coinbase_live.py"
+  ROUTERS_OK=0
+fi
+
+# Start Routers if Not Running
+if ! ps aux | grep -q "[r]outer_oanda_live.py"; then
+  echo "❌ OANDA router not running - Starting..." | tee -a "$LOG_FILE"
+  source "$BASE/coinbase_env/bin/activate"
+  python3 "$BASE/router_oanda_live.py" &
+  sleep 2
+  if ps aux | grep -q "[r]outer_oanda_live.py"; then
+    echo "✅ OANDA router started" | tee -a "$LOG_FILE"
+  else
+    echo "❌ OANDA router failed to start" | tee -a "$LOG_FILE"
+    ROUTERS_OK=0
+  fi
+fi
+if ! ps aux | grep -q "[r]outer_coinbase_live.py"; then
+  echo "❌ Coinbase router not running - Starting..." | tee -a "$LOG_FILE"
+  source "$BASE/coinbase_env/bin/activate"
+  python3 "$BASE/router_coinbase_live.py" &
+  sleep 2
+  if ps aux | grep -q "[r]outer_coinbase_live.py"; then
+    echo "✅ Coinbase router started" | tee -a "$LOG_FILE"
+  else
+    echo "❌ Coinbase router failed to start" | tee -a "$LOG_FILE"
+    ROUTERS_OK=0
+  fi
+fi
+
+# [6/6] Launch Swarm if All Green
+echo "🧠 [6/6] Checking for Launch Clearance..." | tee -a "$LOG_FILE"
+if [ $ALL_LOGS_OK -eq 1 ] && [ $ALL_PROCESSES_OK -eq 1 ] && [ $COINBASE_OK -eq 1 ] && [ $DASHBOARD_OK -eq 1 ] && [ $ROUTERS_OK -eq 1 ]; then
+  echo "✅ ALL SYSTEMS GREEN - READY FOR LAUNCH" | tee -a "$LOG_FILE"
+  read -p "🔐 Enter Constitutional PIN to Deploy Live Swarm: " PIN
+  if [[ "$PIN" != "841921" ]]; then
+    echo "❌ PIN INCORRECT. ABORTING." | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  echo "✅ PIN VERIFIED - LAUNCHING SWARM..." | tee -a "$LOG_FILE"
+  pkill -f start_enhanced_swarm.sh
+  source "$BASE/coinbase_env/bin/activate"
+  bash ./start_enhanced_swarm.sh &
+  sleep 5
+  bash ./print_live_swarm_status.sh
+  echo "📊 LIVE LOG FEEDS:" | tee -a "$LOG_FILE"
+  tail -n 10 -f "$BASE/logs/live_trades.log" "$BASE/logs/ml_predictions.log" "$BASE/logs/system_health.log"
+else
+  echo "❌ NOT ALL SYSTEMS GREEN - LAUNCH ABORTED" | tee -a "$LOG_FILE"
+  echo "⚠️ Fix the following issues and rerun:" | tee -a "$LOG_FILE"
+  [ $ALL_LOGS_OK -eq 0 ] && echo "- Missing logs" | tee -a "$LOG_FILE"
+  [ $ALL_PROCESSES_OK -eq 0 ] && echo "- Inactive processes" | tee -a "$LOG_FILE"
+  [ $COINBASE_OK -eq 0 ] && echo "- Coinbase API connection" | tee -a "$LOG_FILE"
+  [ $DASHBOARD_OK -eq 0 ] && echo "- Dashboard API" | tee -a "$LOG_FILE"
+  [ $ROUTERS_OK -eq 0 ] && echo "- Router scripts" | tee -a "$LOG_FILE"
+  echo "📜 Check $LOG_FILE for details" | tee -a "$LOG_FILE"
+  exit 1
+fi

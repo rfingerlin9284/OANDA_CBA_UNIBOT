@@ -1,0 +1,10 @@
+#!/bin/bash
+TARGET="/home/ing/overlord/wolfpack-lite/oanda_cba_unibot/train_models_from_historical.py"
+sed -i '/🕰️ Starting full historical training/d' "$TARGET"
+sed -i '/📅 Loading data for year/d' "$TARGET"
+sed -i '/🤖 Training model on loaded data/d' "$TARGET"
+sed -i '/💾 Saving trained model/d' "$TARGET"
+sed -i '/for year in range(/i\    print("🕰️ Starting full historical training...")' "$TARGET"
+sed -i '/for year in range(/a\        print(f"📅 Loading data for year: {year}")' "$TARGET"
+sed -i '/model.fit(/i\        print("🤖 Training model on loaded data...")' "$TARGET"
+sed -i '/joblib.dump(/i\        print("💾 Saving trained model...")' "$TARGET"

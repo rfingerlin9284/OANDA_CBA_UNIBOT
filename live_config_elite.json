@@ -1,0 +1,52 @@
+{
+  "elite_trading_config": {
+    "architecture": "Dual-Model Elite Squad - 18+18 Pairs",
+    "version": "3.0.0",
+    "deployment_date": "2025-08-06",
+    "constitutional_pin": "841921",
+    
+    "trading_pairs": {
+      "forex": [
+        "EUR_USD", "USD_JPY", "GBP_USD", "USD_CHF", "AUD_USD", "NZD_USD",
+        "EUR_JPY", "GBP_JPY", "EUR_GBP", "USD_CAD", "EUR_CHF", "AUD_JPY", 
+        "CHF_JPY", "GBP_CHF", "NZD_JPY", "CAD_JPY", "EUR_AUD", "GBP_AUD"
+      ],
+      "crypto": [
+        "BTC-USD", "ETH-USD", "SOL-USD", "DOGE-USD", "XRP-USD", "ADA-USD",
+        "AVAX-USD", "LINK-USD", "MATIC-USD", "DOT-USD", "LTC-USD", "APT-USD",
+        "BCH-USD", "UNI-USD", "OP-USD", "NEAR-USD", "INJ-USD", "XLM-USD"
+      ]
+    },
+    
+    "model_architecture": {
+      "forex_model": {
+        "file": "models/forex_elite_18.pkl",
+        "pairs_count": 18,
+        "specialization": "High-frequency FX pairs with optimal liquidity",
+        "features": ["RSI", "MACD", "FVG", "Fibonacci", "Volume", "Momentum"]
+      },
+      "crypto_model": {
+        "file": "models/crypto_elite_18.pkl", 
+        "pairs_count": 18,
+        "specialization": "Top Coinbase crypto pairs with DeFi integration",
+        "features": ["RSI", "OBV", "FVG", "Social_Sentiment", "Volume", "Volatility"]
+      }
+    },
+    
+    "execution_strategy": {
+      "max_concurrent_trades": 18,
+      "max_daily_trades": 360,
+      "risk_per_trade": 0.02,
+      "model_confidence_threshold": 0.70,
+      "pair_correlation_limit": 0.6
+    },
+    
+    "performance_targets": {
+      "forex_target_pairs": 18,
+      "crypto_target_pairs": 18,
+      "total_coverage": 36,
+      "expected_daily_signals": 72,
+      "target_win_rate": 0.68
+    }
+  }
+}

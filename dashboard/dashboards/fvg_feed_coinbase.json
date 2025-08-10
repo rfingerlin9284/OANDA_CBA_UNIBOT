@@ -1,0 +1,18 @@
+{
+  "pairs": {
+    "BTC-USD": {
+      "direction": "SELL",
+      "confidence": 0.82,
+      "entry": 45250.0,
+      "sl": 45800.0,
+      "tp": 43600.0,
+      "status": "PENDING",
+      "time": "13:38:48",
+      "reason": "Bearish FVG + EMA Break"
+    }
+  },
+  "last_scan": "2025-08-03 13:38:48",
+  "active_trades": 2,
+  "system_status": "LIVE COINBASE SPOT TRADING",
+  "last_update": "Never"
+}

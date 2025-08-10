@@ -1,0 +1,89 @@
+{
+  "enhanced_swarm_config": {
+    "architecture": "Enhanced Swarm - 3.4x Performance Advantage",
+    "version": "2.0.0",
+    "deployment_date": "2025-08-05",
+    
+    "trading_pairs": {
+      "forex": [
+        "EUR_USD", "GBP_USD", "USD_JPY", "AUD_USD",
+        "USD_CHF", "USD_CAD", "NZD_USD", "EUR_GBP",
+        "EUR_JPY", "GBP_JPY", "AUD_JPY", "CHF_JPY"
+      ],
+      "crypto": [
+        "BTC-USD", "ETH-USD", "SOL-USD", "ADA-USD",
+        "MATIC-USD", "LINK-USD", "DOT-USD", "AVAX-USD",
+        "ATOM-USD", "ALGO-USD", "XRP-USD", "LTC-USD"
+      ]
+    },
+    
+    "smart_logic": {
+      "market_regime_detection": true,
+      "volatility_adjustment": true,
+      "correlation_analysis": true,
+      "momentum_confirmation": true,
+      "break_even_protection": true,
+      "smart_leverage_scaling": true,
+      "oco_order_management": true,
+      "bullish_bearish_strategies": true
+    },
+    
+    "risk_management": {
+      "max_leverage": 20,
+      "break_even_threshold": 0.5,
+      "correlation_limit": 0.7,
+      "volatility_multiplier": 1.5,
+      "drawdown_limit": 0.15,
+      "smart_sizing": true,
+      "max_concurrent_trades": 12,
+      "max_daily_trades": 200
+    },
+    
+    "ml_configuration": {
+      "confidence_threshold": 0.65,
+      "feature_count": 24,
+      "model_type": "ensemble",
+      "prediction_timeout": 5,
+      "retraining_frequency": "daily"
+    },
+    
+    "execution": {
+      "cycle_interval": 30,
+      "parallel_workers": 24,
+      "timeout_per_trade": 30,
+      "retry_attempts": 3,
+      "performance_reporting_frequency": 10
+    },
+    
+    "market_sessions": {
+      "asian": {"start": "03:00", "end": "08:00", "timezone": "America/New_York"},
+      "london": {"start": "08:00", "end": "12:00", "timezone": "America/New_York"},
+      "new_york": {"start": "09:00", "end": "17:00", "timezone": "America/New_York"},
+      "overlap_priority": true
+    },
+    
+    "performance_targets": {
+      "daily_pnl_target": 400.0,
+      "minimum_win_rate": 65.0,
+      "maximum_drawdown": 15.0,
+      "trades_per_day_target": 50,
+      "architecture_advantage": "3.4x over monolithic"
+    },
+    
+    "logging": {
+      "level": "INFO",
+      "file_rotation": "daily",
+      "max_file_size": "100MB",
+      "retain_days": 30,
+      "performance_logging": true
+    },
+    
+    "alerts": {
+      "performance_degradation": true,
+      "system_errors": true,
+      "high_drawdown": true,
+      "connection_issues": true,
+      "daily_summary": true
+    }
+  }
+}

@@ -1,0 +1,406 @@
+{
+  "title": "COINBASE ADVANCED API COMPLETE LOCKDOWN BACKUP",
+  "constitutional_pin": "841921",
+  "creation_date": "2025-08-05T22:21:53.052900",
+  "verification_status": "\u2705 CONFIRMED WORKING",
+  "verification_date": "2025-08-05",
+    "accounts_found": 11,
+    "products_available": 767,
+    "authentication_success": true,
+    "response_time_ms": "<2000"
+  },
+  "credential_specifications": {
+    "title": "COINBASE ADVANCED TRADE API CREDENTIAL SPECIFICATIONS",
+    "verification_date": "2025-08-05",
+    "verification_status": "\u2705 CONFIRMED WORKING",
+    "accounts_detected": 11,
+    "products_available": 767,
+    "json_source_format": {
+      "description": "Original JSON file format from Coinbase Developer Portal",
+      "download_location": "https://portal.cdp.coinbase.com/access/api",
+      "file_structure": {
+        "id": "API_KEY_ID_PLACEHOLDER",
+        "privateKey": "PRIVATE_KEY_BASE64_PLACEHOLDER"
+      },
+      "exact_working_example": {
+        "id": "2636c881-b44e-4263-b05d-fb10a5ad1836",
+        "privateKey": "s+jUeS54GxpxQ3WOM5uLHHlm9JhCIrtBeE9X1Drn2IfPHg6yie2q+GEAIwRJGkAkZyUOgY0YQE27H1R5CNFGGg=="
+      },
+      "field_format_specifications": {
+        "id_field": {
+          "field_name": "id",
+          "format": "UUID version 4",
+          "pattern": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",
+          "character_count": 36,
+          "example": "2636c881-b44e-4263-b05d-fb10a5ad1836",
+          "usage": "Used as JWT 'sub' claim and 'kid' header",
+          "validation_regex": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "privateKey_field": {
+          "field_name": "privateKey",
+          "format": "Base64 encoded 64-byte key",
+          "character_count": 88,
+          "decoded_byte_count": 64,
+          "structure": "32-byte Ed25519 seed + 32-byte public key",
+          "example": "s+jUeS54GxpxQ3WOM5uLHHlm9JhCIrtBeE9X1Drn2IfPHg6yie2q+GEAIwRJGkAkZyUOgY0YQE27H1R5CNFGGg==",
+          "encoding": "Standard Base64 with padding",
+          "usage": "Source for Ed25519 private key extraction"
+        }
+      }
+    },
+    "extracted_formats": {
+      "description": "All required format conversions from JSON source",
+      "api_key_id": {
+        "source": "JSON 'id' field (direct copy)",
+        "placeholder": "COINBASE_API_KEY_ID",
+        "format": "UUID string",
+        "example": "2636c881-b44e-4263-b05d-fb10a5ad1836",
+        "character_count": 36,
+        "usage": "JWT payload 'sub' claim, JWT header 'kid' field"
+      },
+      "ed25519_seed_base64": {
+        "source": "First 32 bytes of decoded privateKey, re-encoded as Base64",
+        "placeholder": "COINBASE_PRIVATE_KEY_SEED",
+        "format": "Base64 encoded 32-byte Ed25519 seed",
+        "example": "s+jUeS54GxpxQ3WOM5uLHHlm9JhCIrtBeE9X1Drn2Ic=",
+        "character_count": 44,
+        "extraction_code": "base64.b64encode(base64.b64decode(privateKey)[:32]).decode('utf-8')",
+        "usage": "Direct Ed25519 private key creation"
+      },
+      "ed25519_seed_hex": {
+        "source": "First 32 bytes of decoded privateKey as hexadecimal",
+        "placeholder": "COINBASE_PRIVATE_KEY_HEX",
+        "format": "Hexadecimal string (lowercase)",
+        "example": "b3e8d4792e781b1a7143758e339b8b1c7966f4984222bb41784f57d43ae7d887",
+        "character_count": 64,
+        "extraction_code": "base64.b64decode(privateKey)[:32].hex()",
+        "usage": "Debugging, verification, alternative key formats"
+      },
+      "pem_format": {
+        "source": "Ed25519 seed converted to PKCS#8 PEM format",
+        "placeholder": "COINBASE_PRIVATE_KEY_PEM",
+        "format": "PEM encoded PKCS#8 private key",
+        "example": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEILPo1HkueBsacUN1jjObixx5ZvSYQiK7QXhPV9Q659iH\n-----END PRIVATE KEY-----",
+        "line_count": 3,
+        "base64_content": "MC4CAQAwBQYDK2VwBCIEILPo1HkueBsacUN1jjObixx5ZvSYQiK7QXhPV9Q659iH",
+        "usage": "Direct use with PyJWT library for EdDSA signing",
+        "generation_code": "ed25519_key.private_bytes(encoding=PEM, format=PKCS8, encryption_algorithm=NoEncryption)"
+      }
+    }
+  },
+  "jwt_specifications": {
+    "title": "COINBASE ADVANCED TRADE JWT TOKEN SPECIFICATION",
+    "algorithm": "EdDSA",
+    "key_curve": "Ed25519",
+    "verification_status": "\u2705 CONFIRMED WORKING",
+    "success_rate": "100%",
+    "jwt_header_specification": {
+      "description": "Exact JWT header structure - ALL FIELDS REQUIRED",
+      "required_fields": {
+        "alg": {
+          "value": "EdDSA",
+          "description": "Ed25519 signature algorithm",
+          "type": "string",
+          "required": true,
+          "alternatives": "NONE - Must be EdDSA",
+          "critical": "DO NOT CHANGE - Other algorithms fail"
+        },
+        "kid": {
+          "placeholder": "COINBASE_API_KEY_ID",
+          "example": "2636c881-b44e-4263-b05d-fb10a5ad1836",
+          "description": "API Key ID (same as 'sub' in payload)",
+          "type": "string",
+          "required": true,
+          "source": "Credentials API Key ID"
+        },
+        "typ": {
+          "value": "JWT",
+          "description": "Token type",
+          "type": "string",
+          "required": true,
+          "alternatives": "NONE - Must be JWT"
+        },
+        "nonce": {
+          "placeholder": "UNIQUE_UUID4_PER_REQUEST",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+          "description": "Unique nonce for each request",
+          "type": "string",
+          "required": true,
+          "generation": "str(uuid.uuid4())",
+          "critical": "Must be unique for each JWT token"
+        }
+      },
+      "exact_header_example": {
+        "alg": "EdDSA",
+        "kid": "2636c881-b44e-4263-b05d-fb10a5ad1836",
+        "typ": "JWT",
+        "nonce": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+      }
+    },
+    "jwt_payload_specification": {
+      "description": "Exact JWT payload structure - WORKING FORMAT CONFIRMED",
+      "format_name": "Advanced Trade CDP Format",
+      "success_verification": "\u2705 200 OK Response with 11 accounts",
+      "required_fields": {
+        "iss": {
+          "value": "cdp",
+          "description": "Issuer - Coinbase Developer Platform",
+          "type": "string",
+          "required": true,
+          "critical": "MUST be 'cdp' - Other values (coinbase-cloud, api key) FAIL",
+            "coinbase-cloud": "\u274c 401 Unauthorized",
+            "api_key_id": "\u274c 401 Unauthorized",
+            "coinbase": "\u274c 401 Unauthorized"
+          }
+        },
+        "sub": {
+          "placeholder": "COINBASE_API_KEY_ID",
+          "example": "2636c881-b44e-4263-b05d-fb10a5ad1836",
+          "description": "Subject - API Key ID",
+          "type": "string",
+          "required": true,
+          "source": "Same as 'kid' header and credentials API Key ID"
+        },
+        "nbf": {
+          "placeholder": "CURRENT_UNIX_TIMESTAMP",
+          "example": 1722873367,
+          "description": "Not Before - Current timestamp",
+          "type": "integer",
+          "required": true,
+          "generation": "int(time.time())"
+        },
+        "exp": {
+          "placeholder": "CURRENT_TIMESTAMP_PLUS_120",
+          "example": 1722873487,
+          "description": "Expiry - 120 seconds from now",
+          "type": "integer",
+          "required": true,
+          "generation": "int(time.time()) + 120",
+          "max_duration": 120,
+          "critical": "Maximum 120 seconds - longer durations may fail"
+        },
+        "uri": {
+          "placeholder": "HTTP_METHOD_SPACE_HOSTNAME_PATH",
+          "example": "GET api.coinbase.com/api/v3/brokerage/accounts",
+          "description": "Request URI - METHOD + hostname + path",
+          "type": "string",
+          "required": true,
+          "format": "{HTTP_METHOD} api.coinbase.com{API_PATH}",
+          "examples": {
+            "get_accounts": "GET api.coinbase.com/api/v3/brokerage/accounts",
+            "get_products": "GET api.coinbase.com/api/v3/brokerage/products",
+            "post_order": "POST api.coinbase.com/api/v3/brokerage/orders"
+          },
+          "critical": "Must include full hostname, not just path"
+        },
+        "aud": {
+          "value": [
+            "cdp_service"
+          ],
+          "description": "Audience - CDP service array",
+          "type": "array",
+          "required": true,
+          "critical": "MUST be array ['cdp_service'] - NOT string 'cdp_service'",
+            "cdp_service": "\u274c 401 Unauthorized (string format)",
+            "retail_rest_api_proxy": "\u274c 401 Unauthorized"
+          }
+        }
+      },
+      "exact_payload_example": {
+        "iss": "cdp",
+        "sub": "2636c881-b44e-4263-b05d-fb10a5ad1836",
+        "nbf": 1722873367,
+        "exp": 1722873487,
+        "uri": "GET api.coinbase.com/api/v3/brokerage/accounts",
+        "aud": [
+          "cdp_service"
+        ]
+      }
+    },
+    "jwt_signing_process": {
+      "description": "Exact JWT signing process using Ed25519",
+      "library": "PyJWT",
+      "algorithm": "EdDSA",
+      "key_format": "PEM PKCS#8",
+      "step_by_step_process": [
+        "1. Load Ed25519 private key from PEM format",
+        "2. Create current timestamp: int(time.time())",
+        "3. Generate unique nonce: str(uuid.uuid4())",
+        "4. Build JWT headers with alg, kid, typ, nonce",
+        "5. Build JWT payload with iss='cdp', sub, nbf, exp, uri, aud",
+        "6. Sign using jwt.encode(payload, private_key, algorithm='EdDSA', headers=headers)",
+        "7. Return base64-encoded JWT token string"
+      ],
+      "exact_code_implementation": "\nimport jwt\nimport time\nimport uuid\nfrom cryptography.hazmat.primitives import serialization\n\n# Load private key from PEM\nprivate_key = serialization.load_pem_private_key(pem_string.encode(), password=None)\n\n# Create timestamps\ncurrent_time = int(time.time())\n\n# JWT Headers\nheaders = {\n    \"alg\": \"EdDSA\",\n    \"kid\": api_key_id,\n    \"typ\": \"JWT\", \n    \"nonce\": str(uuid.uuid4())\n}\n\n# JWT Payload  \npayload = {\n    \"iss\": \"cdp\",\n    \"sub\": api_key_id,\n    \"nbf\": current_time,\n    \"exp\": current_time + 120,\n    \"uri\": f\"{method.upper()} api.coinbase.com{path}\",\n    \"aud\": [\"cdp_service\"]\n}\n\n# Generate JWT\ntoken = jwt.encode(payload, private_key, algorithm=\"EdDSA\", headers=headers)\nreturn token\n"
+    }
+  },
+  "api_endpoints": {
+    "title": "COINBASE ADVANCED TRADE API ENDPOINTS",
+    "base_url": "https://api.coinbase.com",
+    "verification_date": "2025-08-05",
+    "authentication_method": "Bearer JWT Token",
+    "primary_endpoints": {
+      "get_accounts": {
+        "path": "/api/v3/brokerage/accounts",
+        "method": "GET",
+        "description": "Get trading accounts - PRIMARY AUTHENTICATION TEST",
+        "verification_status": "\u2705 CONFIRMED WORKING",
+        "response_code": 200,
+        "accounts_found": 11,
+        "jwt_uri_format": "GET api.coinbase.com/api/v3/brokerage/accounts",
+        "response_structure": {
+          "accounts": [
+            {
+              "uuid": "account-uuid-string",
+              "name": "Account Name",
+              "currency": "USD/BTC/ETH/etc",
+              "available_balance": {
+                "value": "amount",
+                "currency": "currency"
+              }
+            }
+          ]
+        }
+      },
+      "get_products": {
+        "path": "/api/v3/brokerage/products",
+        "method": "GET",
+        "description": "Get available trading products",
+        "verification_status": "\u2705 CONFIRMED WORKING",
+        "response_code": 200,
+        "products_found": 767,
+        "jwt_uri_format": "GET api.coinbase.com/api/v3/brokerage/products"
+      }
+    },
+    "trading_endpoints": {
+      "place_order": {
+        "path": "/api/v3/brokerage/orders",
+        "method": "POST",
+        "description": "Place trading orders",
+        "jwt_uri_format": "POST api.coinbase.com/api/v3/brokerage/orders",
+        "payload_example": {
+          "client_order_id": "unique-order-identifier",
+          "product_id": "BTC-USD",
+          "side": "BUY",
+          "order_configuration": {
+            "market_market_ioc": {
+              "quote_size": "100.00"
+            }
+          }
+        }
+      },
+      "get_orders": {
+        "path": "/api/v3/brokerage/orders/historical/batch",
+        "method": "GET",
+        "description": "Get order history",
+        "jwt_uri_format": "GET api.coinbase.com/api/v3/brokerage/orders/historical/batch"
+      }
+    },
+    "request_headers": {
+      "required_headers": {
+        "Authorization": {
+          "format": "Bearer {JWT_TOKEN}",
+          "example": "Bearer eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9...",
+          "description": "JWT token with Bearer prefix"
+        },
+        "Content-Type": {
+          "value": "application/json",
+          "description": "JSON content type for all requests"
+        }
+      },
+      "optional_headers": {
+        "User-Agent": {
+          "example": "Wolfpack-Lite-Trading-Bot/1.0",
+          "description": "Custom user agent identifier"
+        }
+      }
+    }
+  },
+  "implementation_templates": {
+    "title": "EXACT IMPLEMENTATION TEMPLATES WITH PLACEHOLDERS",
+    "credentials_py_template": "\n# ========== COINBASE ADVANCED TRADE LIVE CREDENTIALS ==========\n# JSON Credentials Format (Master ED25519 Protocol Compatible)\n# Source JSON: {\"id\": \"REPLACE_WITH_API_KEY_ID\", \"privateKey\": \"REPLACE_WITH_PRIVATE_KEY_BASE64\"}\n\nclass WolfpackCredentials:\n    # Primary Credentials (from JSON file)\n    COINBASE_API_KEY_ID = \"REPLACE_WITH_API_KEY_ID\"  # 36-char UUID\n    COINBASE_PRIVATE_KEY = \"REPLACE_WITH_PRIVATE_KEY_BASE64\"  # 88-char Base64\n    \n    # Working ED25519 Formats (Extracted from above)\n    COINBASE_PRIVATE_KEY_SEED = \"REPLACE_WITH_32_BYTE_SEED_BASE64\"  # 44-char Base64\n    COINBASE_PRIVATE_KEY_HEX = \"REPLACE_WITH_32_BYTE_SEED_HEX\"  # 64-char Hex\n    COINBASE_PRIVATE_KEY_PEM = \"\"\"-----BEGIN PRIVATE KEY-----\nREPLACE_WITH_PEM_BASE64_CONTENT\n-----END PRIVATE KEY-----\"\"\"  # PEM format for JWT libraries\n    \n    # Endpoint Configuration\n    COINBASE_LIVE_URL = \"https://api.coinbase.com\"  # Advanced Trade LIVE ENDPOINT\n    COINBASE_ALGO = \"ed25519\"  # ED25519 signature algorithm\n",
+    "authentication_class_template": "\nclass CoinbaseAdvancedAuth:\n    \"\"\"Production Coinbase Advanced Trade Ed25519 Authentication\"\"\"\n    \n    def __init__(self, api_key_id, private_key_pem):\n        self.api_key_id = api_key_id\n        self.base_url = \"https://api.coinbase.com\"\n        \n        # Load Ed25519 private key\n        self.private_key = serialization.load_pem_private_key(\n            private_key_pem.encode(), password=None\n        )\n    \n    def generate_jwt(self, method=\"GET\", path=\"/api/v3/brokerage/accounts\"):\n        \"\"\"Generate JWT token using CONFIRMED WORKING specification\"\"\"\n        current_time = int(time.time())\n        \n        # JWT Headers - EXACT FORMAT\n        headers = {\n            \"alg\": \"EdDSA\",\n            \"kid\": self.api_key_id,\n            \"typ\": \"JWT\",\n            \"nonce\": str(uuid.uuid4())\n        }\n        \n        # JWT Payload - WORKING FORMAT (iss=\"cdp\")\n        payload = {\n            \"iss\": \"cdp\",  # CRITICAL: Must be \"cdp\"\n            \"sub\": self.api_key_id,\n            \"nbf\": current_time,\n            \"exp\": current_time + 120,\n            \"uri\": f\"{method.upper()} api.coinbase.com{path}\",\n            \"aud\": [\"cdp_service\"]  # CRITICAL: Must be array\n        }\n        \n        return jwt.encode(payload, self.private_key, algorithm=\"EdDSA\", headers=headers)\n    \n    def request(self, method, path, data=None):\n        \"\"\"Make authenticated request\"\"\"\n        jwt_token = self.generate_jwt(method, path)\n        url = f\"{self.base_url}{path}\"\n        \n        headers = {\n            \"Authorization\": f\"Bearer {jwt_token}\",\n            \"Content-Type\": \"application/json\"\n        }\n        \n        return requests.request(method, url, headers=headers, json=data, timeout=30)\n    \n    def get_accounts(self):\n        \"\"\"Get trading accounts - VERIFIED WORKING\"\"\"\n        response = self.request(\"GET\", \"/api/v3/brokerage/accounts\")\n        if response.status_code == 200:\n            return response.json()\n        else:\n            raise Exception(f\"API Error: {response.status_code} - {response.text}\")\n",
+    "usage_example": "\n# Initialize authentication\nauth = CoinbaseAdvancedAuth(\n    api_key_id=\"your-api-key-id-here\",\n    private_key_pem=\"\"\"-----BEGIN PRIVATE KEY-----\nyour-pem-content-here\n-----END PRIVATE KEY-----\"\"\"\n)\n\n# Test authentication\ntry:\n    accounts = auth.get_accounts()\n    print(f\"\u2705 Success: {len(accounts['accounts'])} accounts found\")\nexcept Exception as e:\n    print(f\"\u274c Error: {e}\")\n"
+  },
+  "troubleshooting_guide": {
+    "title": "COINBASE ADVANCED API TROUBLESHOOTING GUIDE",
+    "common_authentication_errors": {
+      "401_unauthorized": {
+        "error": "HTTP 401 Unauthorized",
+        "root_causes": [
+          "JWT issuer is not 'cdp'",
+          "JWT audience is string instead of array ['cdp_service']",
+          "JWT token expired (>120 seconds)",
+          "Wrong API Key ID in 'sub' or 'kid'",
+          "Invalid Ed25519 signature",
+          "Incorrect URI format in JWT payload"
+        ],
+        "verification_steps": [
+          "\u2705 Check payload.iss == 'cdp'",
+          "\u2705 Check payload.aud == ['cdp_service'] (array)",
+          "\u2705 Check token expiry (exp - nbf <= 120)",
+          "\u2705 Check API Key ID matches Coinbase portal",
+          "\u2705 Verify Ed25519 PEM key is valid",
+          "\u2705 Check URI: 'METHOD api.coinbase.com/path'"
+        ]
+      }
+    },
+    "validation_checklist": {
+      "credentials_validation": [
+        "\u2705 API Key ID is exactly 36 characters (UUID format)",
+        "\u2705 Private Key is exactly 88 characters (Base64)",
+        "\u2705 Ed25519 seed extracts to 32 bytes",
+        "\u2705 PEM format loads without errors"
+      ],
+      "jwt_validation": [
+        "\u2705 Headers contain alg, kid, typ, nonce",
+        "\u2705 Payload iss is string 'cdp'",
+        "\u2705 Payload aud is array ['cdp_service']",
+        "\u2705 Expiry is reasonable (current + 120)",
+        "\u2705 URI includes method and full hostname"
+      ],
+      "api_validation": [
+        "\u2705 Base URL is https://api.coinbase.com",
+        "\u2705 Authorization header: Bearer {token}",
+        "\u2705 Content-Type: application/json",
+        "\u2705 Request timeout configured"
+      ]
+    }
+  },
+  "critical_success_factors": [
+    "Use EdDSA algorithm (NOT ES256)",
+    "JWT issuer MUST be 'cdp' (NOT 'coinbase-cloud')",
+    "JWT audience MUST be ['cdp_service'] array (NOT string)",
+    "Use PEM PKCS#8 format for Ed25519 private key",
+    "Maximum JWT expiry: 120 seconds",
+    "URI format: 'METHOD api.coinbase.com/path'",
+    "Unique nonce (UUID4) for each request"
+  ],
+  "placeholder_replacement_guide": {
+    "REPLACE_WITH_API_KEY_ID": {
+      "source": "JSON 'id' field",
+      "format": "36-character UUID",
+      "example": "2636c881-b44e-4263-b05d-fb10a5ad1836"
+    },
+    "REPLACE_WITH_PRIVATE_KEY_BASE64": {
+      "source": "JSON 'privateKey' field",
+      "format": "88-character Base64 string",
+      "example": "s+jUeS54GxpxQ3WOM5uLHHlm9JhCIrtBeE9X1Drn2IfPHg6yie2q+GEAIwRJGkAkZyUOgY0YQE27H1R5CNFGGg=="
+    },
+    "REPLACE_WITH_32_BYTE_SEED_BASE64": {
+      "source": "First 32 bytes of decoded privateKey",
+      "format": "44-character Base64 string",
+      "example": "s+jUeS54GxpxQ3WOM5uLHHlm9JhCIrtBeE9X1Drn2Ic="
+    },
+    "REPLACE_WITH_32_BYTE_SEED_HEX": {
+      "source": "First 32 bytes as hexadecimal",
+      "format": "64-character lowercase hex",
+      "example": "b3e8d4792e781b1a7143758e339b8b1c7966f4984222bb41784f57d43ae7d887"
+    },
+    "REPLACE_WITH_PEM_BASE64_CONTENT": {
+      "source": "Ed25519 key in PKCS#8 PEM format",
+      "format": "Base64 PEM content (usually 1-2 lines)",
+      "example": "MC4CAQAwBQYDK2VwBCIEILPo1HkueBsacUN1jjObixx5ZvSYQiK7QXhPV9Q659iH"
+    }
+  }
+}

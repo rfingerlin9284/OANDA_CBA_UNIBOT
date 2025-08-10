@@ -1,0 +1,18 @@
+{
+  "pairs": {
+    "EUR/USD": {
+      "direction": "BUY",
+      "confidence": 0.85,
+      "entry": 1.105,
+      "sl": 1.102,
+      "tp": 1.114,
+      "status": "ACTIVE",
+      "time": "13:38:48",
+      "reason": "Bullish FVG + RSI Confluence"
+    }
+  },
+  "last_scan": "2025-08-03 13:38:48",
+  "active_trades": 1,
+  "system_status": "LIVE OANDA TRADING",
+  "last_update": "Never"
+}

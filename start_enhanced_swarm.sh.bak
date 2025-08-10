@@ -1,0 +1,27 @@
+#!/bin/bash
+# Enhanced Swarm Trading Bot Startup Script
+
+echo "🏆 STARTING ENHANCED SWARM TRADING BOT"
+echo "====================================="
+
+# Check Python environment
+if ! command -v python3 &> /dev/null; then
+    echo "❌ Python 3 not found"
+    exit 1
+fi
+
+# Check required Python packages
+echo "🔍 Checking Python dependencies..."
+python3 -c "
+import asyncio, json, time, logging, concurrent.futures, threading
+print('✅ Core packages available')
+"
+
+# Start enhanced swarm bot
+echo "🚀 Launching enhanced swarm trading bot..."
+python3 main_swarm_enhanced.py
+
+
+# === MASTER TERMINAL HUMAN STREAM ===
+echo '🔊 Launching master terminal stream: full_battle_stream.py'
+python3 full_battle_stream.py

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RBOTzilla Live Dashboard</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body style="background:black;color:white;font-family:monospace;">
+    <h1>🔥 RBOTzilla Live Feed</h1>
+    <pre id="stream"></pre>
+    <script>
+        const socket = io();
+        const stream = document.getElementById("stream");
+        socket.on("ml_update", function(data) {
+            const line = `[${data.system}] ${data.model} → ${data.prediction} (${(data.confidence*100).toFixed(1)}%) | FVG: ${data.fvg_signal || 'N/A'} | Fib: ${data.fibonacci || 'N/A'}\n`;
+            const span = document.createElement("span");
+            span.innerText = line;
+            span.style.color = data.system.toLowerCase().includes("coinbase") ? "red" : "yellow";
+            stream.appendChild(span);
+            stream.scrollTop = stream.scrollHeight;
+        });
+    </script>
+</body>
+</html>

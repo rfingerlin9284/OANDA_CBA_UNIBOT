@@ -1,0 +1,4 @@
+{
+  "name": "organizations/your-org-id/apiKeys/2636c881-b44e-4263-b05d-fb10a5ad1836",
+  "privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEINeedToReplaceThisWithYourActualECDSAPrivateKey\nFromCoinbasePortalAdvancedSettingsDownload\n-----END EC PRIVATE KEY-----\n"
+}

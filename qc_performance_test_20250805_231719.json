@@ -1,0 +1,191 @@
+{
+  "timestamp": "2025-08-05T23:17:16.420717",
+  "constitutional_pin": "841921",
+  "warnings": 0,
+  "critical_failures": [],
+  "performance_metrics": {
+    "Coinbase Authentication": {
+      "auth_init_time": 0.0008351802825927734,
+      "connection_time": 0.30540919303894043,
+      "accounts_time": 0.1202707290649414,
+      "account_count": 11,
+      "products_time": 0.19622564315795898,
+      "product_count": 767
+    },
+    "Coinbase Account Access": {
+      "accounts_time": 0.1202707290649414,
+      "account_count": 11
+    },
+    "Coinbase Product Access": {
+      "products_time": 0.19622564315795898,
+      "product_count": 767
+    },
+    "OANDA Account Access": {
+      "init_time": 0.000171661376953125,
+      "accounts_time": 0.1326000690460205,
+      "account_count": 2
+    }
+  },
+  "api_response_times": {},
+  "system_resources": {
+    "cpu_percent": 1.3,
+    "cpu_count": 32,
+    "memory_percent": 15.3,
+    "memory_available_gb": 26.41,
+    "disk_percent": 1.3,
+    "disk_free_gb": 943.66,
+    "network_bytes_sent": 2485281441,
+    "network_bytes_recv": 2446131486
+  },
+  "detailed_results": {
+    "Credentials Loading": {
+      "passed": true,
+      "details": "OANDA: \u2705 | Coinbase: \u2705",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:16.421129"
+    },
+    "Constitutional PIN Validation": {
+      "passed": true,
+      "details": "PIN: 841921",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:16.421142"
+    },
+    "Coinbase Authentication": {
+      "passed": true,
+      "details": "Init: 0.001s | Connect: 0.305s",
+      "performance_data": {
+        "auth_init_time": 0.0008351802825927734,
+        "connection_time": 0.30540919303894043,
+        "accounts_time": 0.1202707290649414,
+        "account_count": 11,
+        "products_time": 0.19622564315795898,
+        "product_count": 767
+      },
+      "timestamp": "2025-08-05T23:17:16.744809"
+    },
+    "Coinbase Account Access": {
+      "passed": true,
+      "details": "Accounts: 11 | Time: 0.120s",
+      "performance_data": {
+        "accounts_time": 0.1202707290649414,
+        "account_count": 11
+      },
+      "timestamp": "2025-08-05T23:17:16.865160"
+    },
+    "Coinbase Product Access": {
+      "passed": true,
+      "details": "Products: 767 | Time: 0.196s",
+      "performance_data": {
+        "products_time": 0.19622564315795898,
+        "product_count": 767
+      },
+      "timestamp": "2025-08-05T23:17:17.061635"
+    },
+    "Coinbase API Performance": {
+      "passed": true,
+      "details": "All responses < 2.0s: True",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:17.061822"
+    },
+    "OANDA Account Access": {
+      "passed": true,
+      "details": "Accounts: 2 | Time: 0.133s",
+      "performance_data": {
+        "init_time": 0.000171661376953125,
+        "accounts_time": 0.1326000690460205,
+        "account_count": 2
+      },
+      "timestamp": "2025-08-05T23:17:17.212658"
+    },
+    "OANDA API Performance": {
+      "passed": true,
+      "details": "Response time: 0.133s < 3.0s",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:17.212749"
+    },
+    "CPU Usage": {
+      "passed": true,
+      "details": "1.3% (32 cores) - \u2705 Good",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:18.221590"
+    },
+    "Memory Usage": {
+      "passed": true,
+      "details": "15.3% (26.4GB available) - \u2705 Good",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:18.221723"
+    },
+    "Disk Usage": {
+      "passed": true,
+      "details": "1.3% (943.7GB free) - \u2705 Good",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:18.221770"
+    },
+    "OANDA Trading Pairs": {
+      "passed": true,
+      "details": "10 pairs configured: EUR/USD, GBP/USD, USD/JPY...",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:18.222025"
+    },
+    "Coinbase Trading Pairs": {
+      "passed": true,
+      "details": "10 pairs configured: BTC/USD, ETH/USD, SOL/USD...",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:18.222177"
+    },
+    "Risk Management Settings": {
+      "passed": true,
+      "details": "Risk: 1.0% | Min R:R: 1:2.5 | Max Concurrent: 3",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:18.222252"
+    },
+    "Connectivity - OANDA Live": {
+      "passed": false,
+      "details": "0.179s | Status: 520",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:18.401155"
+    },
+    "Connectivity - Coinbase Advanced": {
+      "passed": true,
+      "details": "0.613s | Status: 200",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:19.014364"
+    },
+    "Connectivity - Coinbase CDP": {
+      "passed": false,
+      "details": "0.101s | Status: 404",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:19.115736"
+    },
+    "Connectivity - Google DNS": {
+      "passed": true,
+      "details": "0.246s | Status: 200",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:19.361854"
+    },
+    "Invalid Endpoint Handling": {
+      "passed": false,
+      "details": "Gracefully handles 404 errors",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:19.363359"
+    },
+    "Timeout Handling": {
+      "passed": true,
+      "details": "Request timeouts configured",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:19.363407"
+    },
+    "Authentication Speed": {
+      "passed": true,
+      "details": "Average: 0.000s < 0.1s \u2705",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:19.862994"
+    },
+    "API Response Speed": {
+      "passed": true,
+      "details": "Average: 0.166s < 2.0s \u2705",
+      "performance_data": null,
+      "timestamp": "2025-08-05T23:17:19.863065"
+    }
+  }
+}

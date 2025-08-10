@@ -1,0 +1,29 @@
+# WOLFPACK-LITE DEPENDENCIES
+# Live trading FVG sniper system
+
+# Core trading libraries
+ccxt>=4.0.0                    # Cryptocurrency exchange library (Coinbase)
+oandapyV20>=0.7.2             # OANDA REST API v20
+pandas>=1.5.0                 # Data manipulation
+numpy>=1.24.0                 # Numerical computing
+ta>=0.10.2                    # Technical analysis indicators
+
+# Coinbase Advanced Trade JWT ed25519 Authentication
+cryptography>=41.0.0          # ed25519 signature for Coinbase JWT
+PyJWT>=2.8.0                  # JWT token creation
+pycryptodome>=3.18.0         # Additional crypto support for ed25519
+
+# Dashboard and UI
+rich>=13.0.0                  # Terminal UI for dashboards
+
+# Timezone and scheduling  
+pytz>=2022.1                  # Timezone handling (Hamilton NJ EST/EDT)
+schedule>=1.2.0               # Task scheduling for market sessions
+
+# Optional (for enhanced features)
+requests>=2.28.0              # HTTP requests
+python-dateutil>=2.8.0       # Date utilities
+
+# Development/debugging (optional)
+# jupyter>=1.0.0              # For notebook development
+# matplotlib>=3.6.0           # For plotting (development only)
