@@ -1,0 +1,48 @@
+# venvs
+.venv/
+venv/
+.unibot_env/
+fresh_env/
+
+# secrets / local config
+.env
+*.env
+*.pem
+*.key
+*.crt
+*.p12
+*.json.secret
+
+# python build junk
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.build/
+dist/
+build/
+
+# logs & runtime noise
+nohup.out
+*.log
+logs/*.log
+logs/*.json
+logs/*.jsonl
+logs/system_health.log
+logs/oanda_router.log
+logs/order_router.log
+
+# editor/OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Windows “alternate stream” artifacts you had
+*:Zone.Identifier
+
+# large artifacts (keep models out of repo unless LFS is used)
+*.pkl
+*.joblib
+*.onnx
+*.bin
