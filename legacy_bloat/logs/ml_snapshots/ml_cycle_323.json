@@ -1,0 +1,13 @@
+{
+  "cycle": 323,
+  "scenario": "volatile",
+  "timestamp": "2025-08-04T09:35:55.016970",
+  "coinbase_results": {},
+  "oanda_results": {},
+  "ml_stats": {
+    "total_decisions": 0,
+    "approved": 0,
+    "rejected": 0,
+    "approval_rate": 0
+  }
+}

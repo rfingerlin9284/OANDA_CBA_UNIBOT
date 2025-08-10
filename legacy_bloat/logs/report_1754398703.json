@@ -1,0 +1,16 @@
+{
+  "pair": "GBP_USD",
+  "status": "closed",
+  "pnl": 0.84,
+  "closed_at": "2025-08-05 12:58:23.098151",
+  "origin": {
+    "pair": "GBP_USD",
+    "direction": "buy",
+    "confidence": 0.91,
+    "fvg_score": 0.77,
+    "fibonacci_ratio": 3,
+    "timestamp": "2025-08-05 12:58:13.040666",
+    "take_profit": 2.1,
+    "stop_loss": 1.1
+  }
+}

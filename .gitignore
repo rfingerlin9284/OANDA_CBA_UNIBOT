@@ -1,10 +1,41 @@
-.unibot_env/
-.env
-.env.*
+# Python
 __pycache__/
 *.pyc
-logs/
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
 *.log
+
+# Virtual envs
+.venv/
+venv/
+.unibot_env/
+fresh_env/
+
+# Editors/OS
 .vscode/
+.idea/
 .DS_Store
-Thumbs.db
+
+# Build/Artifacts
+dist/
+build/
+
+# Data/Models (keep if you want, otherwise ignore)
+data/
+datasets/
+models/*.pkl
+models/*.joblib
+
+# Secrets
+.env
+.local_secure/
+*.pem
+*.key
+
+# Notebook junk
+.ipynb_checkpoints/
+
+# WSL/Windows zone streams (seen in your tree)
+*:Zone.Identifier

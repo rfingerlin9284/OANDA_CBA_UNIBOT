@@ -1,0 +1,16 @@
+{
+  "pair": "BTC-USD",
+  "status": "closed",
+  "pnl": 3.41,
+  "closed_at": "2025-08-05 13:55:06.688524",
+  "origin": {
+    "pair": "BTC-USD",
+    "direction": "buy",
+    "confidence": 0.91,
+    "fvg_score": 0.77,
+    "fibonacci_ratio": 3,
+    "timestamp": "2025-08-05 13:54:56.649648",
+    "take_profit": 2.1,
+    "stop_loss": 1.1
+  }
+}

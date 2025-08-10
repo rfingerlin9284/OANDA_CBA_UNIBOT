@@ -1,0 +1,9 @@
+{
+  "models_exist": true,
+  "hybrid_engine_loads": true,
+  "orderbook_fusion": true,
+  "volatility_filter": true,
+  "session_confluence": true,
+  "training_logs": false,
+  "overall_status": "OPERATIONAL"
+}

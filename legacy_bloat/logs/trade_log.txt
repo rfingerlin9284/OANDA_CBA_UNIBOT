@@ -1,0 +1,20 @@
+[2025-08-03 14:44:06] TEST: Test trade message
+[2025-08-03 14:44:06] ERROR (TEST): Test error message
+[2025-08-03 14:44:06] SIGNAL: 🎯 SIGNAL EUR/USD BULLISH | Confluence: 8.5 | RSI: 30.0 | Entry: 1.10000
+[2025-08-03 15:08:38] TEST: Test trade message
+[2025-08-03 15:08:38] ERROR (TEST): Test error message
+[2025-08-03 15:08:38] SIGNAL: 🎯 SIGNAL EUR/USD BULLISH | Confluence: 8.5 | RSI: 30.0 | Entry: 1.10000
+[2025-08-03 15:10:22] TEST: Test trade message
+[2025-08-03 15:10:22] ERROR (TEST): Test error message
+[2025-08-03 15:10:22] SIGNAL: 🎯 SIGNAL EUR/USD BULLISH | Confluence: 8.5 | RSI: 30.0 | Entry: 1.10000
+[2025-08-04 00:09:55] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:09:56] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:09:56] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:22:37] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:22:38] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:22:38] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:31:40] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:31:41] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:31:41] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:32:29] TRACKER: 📊 Position Tracker initialized
+[2025-08-04 00:32:57] TRACKER: 📊 Position Tracker initialized

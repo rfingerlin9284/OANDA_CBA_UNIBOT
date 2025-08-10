@@ -1,0 +1,16 @@
+{
+  "pair": "USD_JPY",
+  "status": "closed",
+  "pnl": 2.85,
+  "closed_at": "2025-08-05 14:51:55.100380",
+  "origin": {
+    "pair": "USD_JPY",
+    "direction": "buy",
+    "confidence": 0.91,
+    "fvg_score": 0.77,
+    "fibonacci_ratio": 3,
+    "timestamp": "2025-08-05 14:51:44.926846",
+    "take_profit": 2.1,
+    "stop_loss": 1.1
+  }
+}

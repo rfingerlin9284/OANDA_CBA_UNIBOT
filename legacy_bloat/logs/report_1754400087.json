@@ -1,0 +1,16 @@
+{
+  "pair": "SOL-USD",
+  "status": "closed",
+  "pnl": 1.7,
+  "closed_at": "2025-08-05 13:21:27.627427",
+  "origin": {
+    "pair": "SOL-USD",
+    "direction": "buy",
+    "confidence": 0.91,
+    "fvg_score": 0.77,
+    "fibonacci_ratio": 3,
+    "timestamp": "2025-08-05 13:21:17.499393",
+    "take_profit": 2.1,
+    "stop_loss": 1.1
+  }
+}

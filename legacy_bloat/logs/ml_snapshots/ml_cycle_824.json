@@ -1,0 +1,13 @@
+{
+  "cycle": 824,
+  "scenario": "bull",
+  "timestamp": "2025-08-04T10:11:45.752245",
+  "coinbase_results": {},
+  "oanda_results": {},
+  "ml_stats": {
+    "total_decisions": 0,
+    "approved": 0,
+    "rejected": 0,
+    "approval_rate": 0
+  }
+}

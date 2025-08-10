@@ -1,0 +1,16 @@
+{
+  "pair": "EUR_USD",
+  "status": "closed",
+  "pnl": 4.13,
+  "closed_at": "2025-08-05 18:14:09.751596",
+  "origin": {
+    "pair": "EUR_USD",
+    "direction": "buy",
+    "confidence": 0.91,
+    "fvg_score": 0.77,
+    "fibonacci_ratio": 3,
+    "timestamp": "2025-08-05 18:14:00.215697",
+    "take_profit": 2.1,
+    "stop_loss": 1.1
+  }
+}

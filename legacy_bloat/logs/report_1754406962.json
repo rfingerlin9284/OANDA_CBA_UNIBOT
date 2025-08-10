@@ -1,0 +1,16 @@
+{
+  "pair": "ETH-USD",
+  "status": "closed",
+  "pnl": 2.16,
+  "closed_at": "2025-08-05 15:16:02.045901",
+  "origin": {
+    "pair": "ETH-USD",
+    "direction": "buy",
+    "confidence": 0.91,
+    "fvg_score": 0.77,
+    "fibonacci_ratio": 3,
+    "timestamp": "2025-08-05 15:15:51.915314",
+    "take_profit": 2.1,
+    "stop_loss": 1.1
+  }
+}
