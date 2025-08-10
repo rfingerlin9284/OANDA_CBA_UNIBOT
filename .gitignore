@@ -1,0 +1,14 @@
+# runtime noise
+logs/
+nohup.out
+*.log
+*.tmp
+*.pid
+__pycache__/
+*.pyc
+
+# venvs and caches
+.venv/
+venv/
+*.egg-info/
+.cache/
