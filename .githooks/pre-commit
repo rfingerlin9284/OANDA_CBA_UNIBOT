@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if git diff --cached --name-only | grep -E '(\.env\.live|\.env\.coinbase|secrets_replace|secrets_swap)' >/dev/null; then
+  echo "❌ Refusing to commit secret or .env files."
+  exit 1
+fi
+# More specific JWT pattern: starts/ends with quotes or assignment, has at least 30 chars per segment
+if git diff --cached -U0 | grep -E 'BEGIN [^-]*PRIVATE KEY|["=][A-Za-z0-9_-]{30,}\.[A-Za-z0-9_-]{30,}\.[A-Za-z0-9_-]{30,}["=]' >/dev/null; then
+  echo "❌ Potential key/JWT detected in commit. Remove or mask it."
+  exit 1
+fi

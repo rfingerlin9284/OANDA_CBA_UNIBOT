@@ -1,48 +1,57 @@
-# venvs
-.venv/
-venv/
-.unibot_env/
-fresh_env/
-
-# secrets / local config
+# keep these private (do NOT commit)
+secrets_swap_manifest.json
+secrets_replace.json
+secrets_replace.json.current
+secrets_swap_report.txt
 .env
-*.env
-*.pem
-*.key
-*.crt
-*.p12
-*.json.secret
+.env.*
 
-# python build junk
+# Virtual environments
+.unibot_env/
+venv/
+env/
+ENV/
+
+# Python cache
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
-*.egg-info/
-.build/
-dist/
-build/
+*.pyd
+.Python
 
-# logs & runtime noise
-nohup.out
-*.log
-logs/*.log
-logs/*.json
-logs/*.jsonl
-logs/system_health.log
-logs/oanda_router.log
-logs/order_router.log
+# Configuration files with sensitive data
+*_key.json
+*credentials*
 
-# editor/OS files
+# IDE files
+.vscode/
+.idea/
+
+# OS files
 .DS_Store
 Thumbs.db
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
 *.swp
 *.swo
 
-# Windows “alternate stream” artifacts you had
-*:Zone.Identifier
+# Build artifacts
+build/
+dist/
+*.egg-info/
 
-# large artifacts (keep models out of repo unless LFS is used)
-*.pkl
-*.joblib
-*.onnx
-*.bin
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation builds
+docs/_build/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/

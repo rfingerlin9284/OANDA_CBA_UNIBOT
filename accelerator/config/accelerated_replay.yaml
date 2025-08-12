@@ -1,0 +1,83 @@
+global:
+  years: 10
+  granularity_fx: "M15"      # 10y of M5 is huge; bump to M15/H1 if needed
+  granularity_crypto: "15m"
+  broker_backend: "SIM"      # SIM = simulated broker (monkeypatch), OANDA = real (not used in replay)
+  practice_live_check: true  # after replay, place ONE OANDA practice order to prove wire
+  base_currency: "USD"
+  starting_equity: 100000
+  max_positions: 1
+  daily_loss_cap_R: 2
+  min_notional_usd: 100      # avoid death-by-tiny trades
+  risk_per_trade_pct: 0.5    # percent of equity risked using SL distance
+  oco_drop_rate: 0.01        # fault injection: 1% "missing OCO" in SIM to test self-heal
+  trail_activation_R: 1.5    # when unrealized >= 1.5R -> remove TP and start trailing
+  trail_atr_mult: 1.2
+  trail_min_pips: 6
+  logging_level: "INFO"
+
+fx:
+  source: "OANDA"            # historical via OANDA candles
+  symbols:                   # 18 liquid FX
+    - "EUR/USD"
+    - "GBP/USD"
+    - "USD/JPY"
+    - "USD/CHF"
+    - "AUD/USD"
+    - "USD/CAD"
+    - "NZD/USD"
+    - "EUR/JPY"
+    - "GBP/JPY"
+    - "EUR/GBP"
+    - "EUR/CHF"
+    - "AUD/JPY"
+    - "CAD/JPY"
+    - "CHF/JPY"
+    - "EUR/AUD"
+    - "EUR/CAD"
+    - "GBP/CHF"
+    - "NZD/JPY"
+
+crypto:
+  exchange: "coinbase"       # ccxt id (use "binance" if you want futures / broader list)
+  futures_exchange: "binanceusdm"  # for perp futures (optional)
+  use_futures: false         # switch to true if you want *_PERP too
+  symbols_spot:              # 18 liquid spot pairs (quote USD/USDT; ccxt normalizes)
+    - "BTC/USD"
+    - "ETH/USD"
+    - "SOL/USD"
+    - "ADA/USD"
+    - "XRP/USD"
+    - "AVAX/USD"
+    - "DOGE/USD"
+    - "MATIC/USD"
+    - "DOT/USD"
+    - "LINK/USD"
+    - "BCH/USD"
+    - "ATOM/USD"
+    - "UNI/USD"
+    - "LTC/USD"
+    - "APT/USD"
+    - "ARB/USD"
+    - "OP/USD"
+    - "TON/USD"
+
+sniper_fvg:
+  atr_period: 14
+  min_atr_multiple: 0.9
+  rr_ratio: 2.0
+  hard_sl_pips: 8
+  tp_pips: 16
+  min_entry_distance_pips: 8
+  cooldown_minutes: 30
+  trading_window_utc: ["06:00","20:00"]
+  per_trade_spread_pips_fx: 0.2
+  per_trade_spread_bps_crypto: 3   # simulate fees/spread on crypto as bps not pips
+
+# ONE tiny practice trade after replay (proof of wire + OCO on-fill)
+practice_trade:
+  symbol: "EUR/USD"
+  side: "buy"
+  units: 100
+  tp_pips: 14
+  sl_pips: 8
