@@ -109,12 +109,16 @@ backups/
 # ----------------------------- ML & DATA FILES -------------------------------
 models/*.pkl
 data/historical/
+data/futures/
 data/cache/
+data/cryptopanic/
 *.joblib
 *.h5
 *.hdf5
 datasets/
 training_data/
+futures_data/
+news_sentiment/
 
 # ----------------------------- JUPYTER NOTEBOOKS ----------------------------
 .ipynb_checkpoints/

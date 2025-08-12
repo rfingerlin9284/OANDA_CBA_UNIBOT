@@ -1,0 +1,96 @@
+{
+  "BTC-USD": {
+    "signal": "HOLD",
+    "confidence": 0.3,
+    "reasons": [],
+    "rsi": 56.897375842455055,
+    "price": 119451.1,
+    "volatility": 0.2513533236454766,
+    "position_size": 59.25,
+    "timestamp": "2025-08-12T15:26:33.389472"
+  },
+  "ETH-USD": {
+    "signal": "HOLD",
+    "confidence": 0.3,
+    "reasons": [
+      "RSI Overbought",
+      "Strong momentum"
+    ],
+    "rsi": 72.01836220938856,
+    "price": 4419.98,
+    "volatility": 0.7626146426376116,
+    "position_size": 57.71,
+    "timestamp": "2025-08-12T15:26:33.391110"
+  },
+  "XRP-USD": {
+    "signal": "HOLD",
+    "confidence": 0.3,
+    "reasons": [],
+    "rsi": 61.982170949134805,
+    "price": 3.2086,
+    "volatility": 0.5363030142742587,
+    "position_size": 58.39,
+    "timestamp": "2025-08-12T15:26:33.392611"
+  },
+  "SOL-USD": {
+    "signal": "HOLD",
+    "confidence": 0.3,
+    "reasons": [
+      "Strong momentum"
+    ],
+    "rsi": 62.82420749279545,
+    "price": 179.74,
+    "volatility": 0.6817771295387697,
+    "position_size": 57.95,
+    "timestamp": "2025-08-12T15:26:33.393714"
+  },
+  "DOGE-USD": {
+    "signal": "HOLD",
+    "confidence": 0.3,
+    "reasons": [
+      "Strong momentum"
+    ],
+    "rsi": 54.52207458208316,
+    "price": 0.22732,
+    "volatility": 0.9156831177021142,
+    "position_size": 57.25,
+    "timestamp": "2025-08-12T15:26:33.394736"
+  },
+  "LINK-USD": {
+    "signal": "HOLD",
+    "confidence": 0.3,
+    "reasons": [
+      "RSI Overbought",
+      "Strong momentum"
+    ],
+    "rsi": 84.5094086021505,
+    "price": 23.344,
+    "volatility": 1.3603291043972792,
+    "position_size": 55.92,
+    "timestamp": "2025-08-12T15:26:33.395893"
+  },
+  "LTC-USD": {
+    "signal": "HOLD",
+    "confidence": 0.3,
+    "reasons": [
+      "Strong momentum"
+    ],
+    "rsi": 57.36782902137238,
+    "price": 122.55,
+    "volatility": 0.6147926195709837,
+    "position_size": 58.16,
+    "timestamp": "2025-08-12T15:26:33.397054"
+  },
+  "MATIC-USD": {
+    "signal": "HOLD",
+    "confidence": 0.3,
+    "reasons": [
+      "Strong momentum"
+    ],
+    "rsi": 54.85074626865676,
+    "price": 0.2416,
+    "volatility": 0.992480998428444,
+    "position_size": 57.02,
+    "timestamp": "2025-08-12T15:26:33.398237"
+  }
+}
