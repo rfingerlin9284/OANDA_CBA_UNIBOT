@@ -1,3 +1,8 @@
+# =============================================================================
+# OANDA_CBA_UNIBOT - COMPREHENSIVE .GITIGNORE
+# =============================================================================
+
+# ----------------------------- SECRETS & CREDENTIALS -------------------------
 # keep these private (do NOT commit)
 secrets_swap_manifest.json
 secrets_replace.json
@@ -5,53 +10,165 @@ secrets_replace.json.current
 secrets_swap_report.txt
 .env
 .env.*
+*.key
+*_key.json
+*credentials*
+*.pem
+api_keys/
+credentials/
+auth/
 
-# Virtual environments
+# ----------------------------- VIRTUAL ENVIRONMENTS --------------------------
 .unibot_env/
 venv/
 env/
 ENV/
+.venv/
+.virtualenv/
+virtualenv/
+pyvenv.cfg
 
-# Python cache
+# ----------------------------- PYTHON ARTIFACTS ------------------------------
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Configuration files with sensitive data
-*_key.json
-*credentials*
-
-# IDE files
+# ----------------------------- IDE & EDITOR FILES ----------------------------
 .vscode/
 .idea/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Log files
-*.log
-
-# Temporary files
-*.tmp
-*.temp
 *.swp
 *.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
 
-# Build artifacts
-build/
-dist/
-*.egg-info/
+# ----------------------------- OPERATING SYSTEM FILES -----------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
 
-# Testing
+# ----------------------------- LOGS & TEMPORARY FILES -----------------------
+logs/
+*.log
+*.tmp
+*.temp
+nohup.out
+*.out
+*.err
 .pytest_cache/
 .coverage
 htmlcov/
+.tox/
+.nox/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
 
-# Documentation builds
-docs/_build/
+# ----------------------------- BUILD & DEPLOYMENT ARTIFACTS -----------------
+*.tar.gz
+*.zip
+*.rar
+*.7z
+backup/
+backups/
+*.bak
+*.backup
+*.old
 
-# Jupyter Notebook checkpoints
+# ----------------------------- ML & DATA FILES -------------------------------
+models/*.pkl
+data/historical/
+data/cache/
+*.joblib
+*.h5
+*.hdf5
+datasets/
+training_data/
+
+# ----------------------------- JUPYTER NOTEBOOKS ----------------------------
 .ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
+
+# ----------------------------- DOCUMENTATION BUILDS -------------------------
+docs/_build/
+doc/_build/
+.readthedocs.yml
+site/
+
+# ----------------------------- TESTING FILES ---------------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# ----------------------------- PACKAGE MANAGERS -----------------------------
+pip-log.txt
+pip-delete-this-directory.txt
+Pipfile.lock
+poetry.lock
+requirements-dev.txt
+
+# ----------------------------- NODE.JS (if any) -----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+
+# ----------------------------- MISC ARTIFACTS --------------------------------
+*.pid
+*.seed
+*.pid.lock
+.nyc_output
+.grunt
+bower_components
+.lock-wscript
+.wafpickle-N
+.node_repl_history
+*.tgz
+.yarn-integrity
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
