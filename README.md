@@ -1,5 +1,24 @@
-# OANDA CBA UNIBOT - HIVE MIND RICK SECURE TRIAD SYSTEM
+# OANDA CBA UNIBOT - HIVE MIND RICK SECU### 🚀 QUICK START
 
+### 1. Initialize HIVE MIND RICK
+```bash
+python hive_mind_rick_cli.py
+```
+
+### 2. Collect Futures Data & Sentiment
+```bash
+./run_futures_collection.sh
+```
+
+### 3. Run Trading System
+```bash
+python auto_live_order_demo.py
+```
+
+### 4. Monitor System Health
+```bash
+python auto_monitor_system.py
+```
 🚀 **Advanced AI Trading Bot with Built-in Agent Overlord and Hive Mind Capabilities**
 
 ## 🔒 SECURE TRIAD ARCHITECTURE
@@ -21,7 +40,9 @@ This system implements a revolutionary **SECURE TRIAD** where:
 ### 📊 TRADING CAPABILITIES
 - **OANDA Integration**: Professional forex trading with real-time execution
 - **Coinbase Advanced API**: Cryptocurrency trading with institutional-grade features
-- **Multi-Asset Support**: Forex, crypto, and cross-market arbitrage
+- **Coinbase Futures Data**: Real-time crypto futures market analysis
+- **CryptoPanic Integration**: Sentiment analysis for enhanced decision making
+- **Multi-Asset Support**: Forex, crypto, and futures cross-market strategies
 - **Risk Management**: Advanced position sizing and capital allocation
 
 ### 🛡️ SECURITY FEATURES
@@ -74,8 +95,9 @@ python auto_monitor_system.py
 - **Python 3.8+** with required dependencies
 - **OANDA API** credentials for forex trading
 - **Coinbase Advanced API** credentials for crypto trading
+- **CryptoPanic API** access for sentiment analysis (free tier available)
 - **Secure environment** for credential storage
-- **Continuous internet** for real-time trading
+- **Continuous internet** for real-time trading and data collection
 
 ## 📁 KEY SYSTEM FILES
 
@@ -88,8 +110,17 @@ python auto_monitor_system.py
 ### Trading Engines:
 - `oanda_trading_engine.py` - Forex trading implementation
 - `coinbase_advanced_api.py` - Cryptocurrency trading
+- `coinbase_futures_collector.py` - Futures data collection with sentiment
+- `futures_signal_engine.py` - Enhanced signal generation
 - `arbitrage_engine.py` - Cross-market opportunities
 - `risk_management_system.py` - Position and capital management
+
+### Data & Intelligence:
+- `run_futures_collection.sh` - Complete futures data pipeline
+- `data/futures/` - Real-time crypto futures data
+- `data/cryptopanic/` - Market sentiment analysis
+- CryptoPanic API integration for news sentiment
+- Technical indicators: RSI, SMA, volatility analysis
 
 ### Security Systems:
 - `credential_encryption.py` - API key protection
